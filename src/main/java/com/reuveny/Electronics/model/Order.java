@@ -5,10 +5,14 @@
  */
 package com.reuveny.Electronics.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
@@ -16,29 +20,38 @@ import java.util.List;
 
 @Entity
 @Table(name = "orders")
+@JacksonXmlRootElement(localName = "order")
+@JsonIgnoreProperties(value = { "user" }, allowGetters = true)
 //@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JacksonXmlProperty(localName = "id")
     private Long id;
 
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
+    @JacksonXmlProperty(localName = "orderDate")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime orderDate;
 
     @Column(nullable = false)
+    @JacksonXmlProperty(localName = "totalAmount")
     private double totalAmount;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
+    @JacksonXmlProperty(localName = "status")
     private Status status;
 
     @OneToMany(
             mappedBy = "order",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
+    @JacksonXmlElementWrapper(localName = "items")
+    @JacksonXmlProperty(localName = "item")
     private List<Item> items;
 
     @ManyToOne

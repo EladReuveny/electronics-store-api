@@ -5,6 +5,7 @@
  */
 package com.reuveny.Electronics.model;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,18 +20,23 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JacksonXmlProperty(localName = "id")
     private Long id;
 
     @Column(unique = true, nullable = false)
+    @JacksonXmlProperty(localName = "email")
     private String email;
 
     @Column(nullable = false)
+    @JacksonXmlProperty(localName = "password")
     private String password;
 
     @Column(nullable = false)
+    @JacksonXmlProperty(localName = "address")
     private String address;
 
     @Column(nullable = false)
+    @JacksonXmlProperty(localName = "phone")
     private String phone;
 
     @Column(nullable = false)
@@ -53,6 +59,7 @@ public class User {
             mappedBy = "user",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
+    @JacksonXmlProperty(localName = "orders")
     private List<Order> orders;
 
     public Long getId() {

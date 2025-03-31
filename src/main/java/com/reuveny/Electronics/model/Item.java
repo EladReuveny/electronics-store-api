@@ -6,6 +6,7 @@
 package com.reuveny.Electronics.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,13 +20,16 @@ import lombok.NoArgsConstructor;
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @JacksonXmlProperty(localName = "id")
     private Long id;
 
     @Column(nullable = false)
+//    @JacksonXmlProperty(localName = "quantity")
     private Integer quantity;
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
+//    @JacksonXmlProperty(localName = "product")
     private Product product;
 
     @ManyToOne
