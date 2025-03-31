@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description
+ *
+ *  Contains user update details, including email, password, address, and phone number.
  */
 package com.reuveny.Electronics.dto;
 

@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description
+ *
+ * Handles database interactions for product storage and retrieval.
  */
 package com.reuveny.Electronics.repository;
 

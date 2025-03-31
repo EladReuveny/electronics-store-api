@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description
+ *
+ * Enum representing order statuses (Pending, Packaging, Shipped, Delivered, Canceled).
  */
 package com.reuveny.Electronics.model;
 

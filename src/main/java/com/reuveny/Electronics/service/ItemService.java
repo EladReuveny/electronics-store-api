@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description
+ *
+ * Handles item-related operations.
  */
 package com.reuveny.Electronics.service;
 

@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description
+ *
+ * Represents a product with attributes like name, description, price, stock, category, and image URL.
  */
 package com.reuveny.Electronics.model;
 

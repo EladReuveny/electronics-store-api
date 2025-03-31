@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description
+ *
+ * Represents a registered user with email, password, address, phone, role, wishlist, shopping cart, and orders.
  */
 package com.reuveny.Electronics.model;
 

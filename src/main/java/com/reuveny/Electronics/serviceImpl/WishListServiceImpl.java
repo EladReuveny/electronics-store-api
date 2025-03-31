@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description Implementation of the WishListService interface to handle wishlist-related operations.
+ *
+ * Implementation of the WishListService interface to handle wishlist-related operations.
  */
 package com.reuveny.Electronics.serviceImpl;
 

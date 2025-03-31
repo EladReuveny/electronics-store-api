@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description Service interface defining operations for managing a user's wish list.
+ *
+ * Manages wishlist operations, such as adding and removing products from a user's wishlist.
  */
 package com.reuveny.Electronics.service;
 
@@ -13,6 +14,7 @@ public interface WishListService {
      *
      * @param userId The ID of the user.
      * @return The wish list associated with the user.
+     * @throws IllegalArgumentException if no wishlist is found for the given user
      */
     WishList getWishListByUserId(Long userId);
 
@@ -22,6 +24,7 @@ public interface WishListService {
      * @param userId The ID of the user.
      * @param productId The ID of the product to add.
      * @return The updated wish list.
+     * @throws IllegalArgumentException if the wishlist or product is not found or if the product already exists in the wishlist
      */
     WishList addProductToWishList(Long userId, Long productId);
 
@@ -31,6 +34,7 @@ public interface WishListService {
      * @param userId The ID of the user.
      * @param productId The ID of the product to remove.
      * @return The updated wish list.
+     * @throws IllegalArgumentException if the wishlist is empty or the product does not exist in the wishlist
      */
     WishList removeProductFromWishList(Long userId, Long productId);
 
@@ -41,6 +45,7 @@ public interface WishListService {
      * @param productId The ID of the product to move.
      * @param quantity  The quantity of the product to move.
      * @return The updated wish list after removing the product.
+     * @throws IllegalArgumentException if the wishlist, product, or shopping cart is not found, or if there is insufficient stock
      */
     WishList moveToShoppingCart(Long userId, Long productId, int quantity);
 
@@ -49,6 +54,7 @@ public interface WishListService {
      *
      * @param userId The ID of the user.
      * @return The empty wish list.
+     * @throws IllegalArgumentException if the wishlist is empty or not found
      */
     WishList clearWishList(Long userId);
 }

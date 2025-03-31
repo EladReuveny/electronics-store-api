@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description
+ *
+ * Enum defining user roles: Customer, Subscribed, and Admin.
  */
 package com.reuveny.Electronics.model;
 

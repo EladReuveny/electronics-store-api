@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description
+ *
+ * Enum representing product categories (Smartphone, Tablet, Laptop, TV).
  */
 package com.reuveny.Electronics.model;
 

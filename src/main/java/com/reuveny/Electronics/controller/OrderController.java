@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description Controller for handling orders, including fetching, updating, and XML formatting.
+ *
+ * Controller for handling orders, including fetching, updating, and XML formatting.
  */
 package com.reuveny.Electronics.controller;
 
@@ -14,6 +15,7 @@ import com.reuveny.Electronics.model.Status;
 import com.reuveny.Electronics.service.OrderService;
 import com.reuveny.Electronics.xml.OrderListWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -77,5 +79,21 @@ public class OrderController {
     @PutMapping("/{orderId}")
     public Order updateOrderStatus(@PathVariable("orderId") Long orderId, @RequestBody Status status) {
         return orderService.updateOrderStatus(orderId, status);
+    }
+
+    /**
+     * Cancels an order if it is within the allowed cancellation period (e.g., 14 days).
+     *
+     * @param orderId The ID of the order to cancel.
+     * @return A response entity with a success message or an error message if the cancellation is not allowed.
+     */
+    @DeleteMapping("/{orderId}")
+    public ResponseEntity<String> cancelOrder(@PathVariable("orderId") Long orderId) {
+        try {
+            orderService.cancelOrder(orderId);
+            return ResponseEntity.ok("Order " + orderId + " has been canceled successfully.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 }

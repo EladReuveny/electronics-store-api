@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description
+ *
+ * Represents an item in a shopping cart or order, linking a product with quantity.
  */
 package com.reuveny.Electronics.model;
 
@@ -20,16 +21,13 @@ import lombok.NoArgsConstructor;
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @JacksonXmlProperty(localName = "id")
     private Long id;
 
     @Column(nullable = false)
-//    @JacksonXmlProperty(localName = "quantity")
     private Integer quantity;
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
-//    @JacksonXmlProperty(localName = "product")
     private Product product;
 
     @ManyToOne

@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description Controller for managing products in the Electronics store.
+ *
+ * Controller for managing products in the Electronics store.
  */
 package com.reuveny.Electronics.controller;
 

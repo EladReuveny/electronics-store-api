@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description Service interface for managing products.
+ *
+ * Manages product-related operations like retrieving, adding, updating, and deleting products.
  */
 package com.reuveny.Electronics.service;
 
@@ -16,6 +17,7 @@ public interface ProductService {
      *
      * @param productId The product ID.
      * @return The product if found.
+     * @throws IllegalArgumentException if the product is not found.
      */
     Product getProductById(Long productId);
 
@@ -56,6 +58,7 @@ public interface ProductService {
      * @param productId The ID of the product to update.
      * @param product   The updated product details.
      * @return The updated product.
+     * @throws IllegalArgumentException if the product is not found.
      */
     Product updateProduct(Long productId, Product product);
 

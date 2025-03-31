@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description
+ *
+ * A wrapper class that encapsulates a list of Order objects for XML serialization. It ensures that multiple orders are grouped under a custom root element (<orders>), making the XML output more structured and readable.
  */
 package com.reuveny.Electronics.xml;
 

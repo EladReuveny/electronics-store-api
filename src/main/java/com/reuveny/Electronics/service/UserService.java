@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description Service interface for managing user-related operations.
+ *
+ *  Handles user-related functionality, including authentication, registration, and profile updates.
  */
 package com.reuveny.Electronics.service;
 
@@ -17,6 +18,7 @@ public interface UserService {
      *
      * @param userId The ID of the user to retrieve.
      * @return The user with the specified ID.
+     * @throws IllegalArgumentException if the user with the given ID does not exist
      */
     User getUserById(Long userId);
 
@@ -32,6 +34,7 @@ public interface UserService {
      *
      * @param user The user information for registration.
      * @return The registered user.
+     * @throws IllegalArgumentException if any required field is missing or if the email is already in use
      */
     User registerUser(User user);
 
@@ -41,6 +44,7 @@ public interface UserService {
      * @param userId The ID of the user to update.
      * @param userUpdateDTO The updated user information.
      * @return The updated user details.
+     * @throws IllegalArgumentException if the user does not exist or if email is already taken
      */
     User updateUser(Long userId, UserUpdateDTO userUpdateDTO);
 
@@ -56,6 +60,7 @@ public interface UserService {
      *
      * @param userLoginDTO The login credentials.
      * @return The authenticated user.
+     * @throws IllegalArgumentException if the email or password is incorrect
      */
     User loginUser(UserLoginDTO userLoginDTO);
 }

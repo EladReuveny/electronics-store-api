@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description
+ *
+ * Represents a user order, storing order date, total amount, status, and associated items.
  */
 package com.reuveny.Electronics.model;
 
@@ -21,7 +22,6 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 @JacksonXmlRootElement(localName = "order")
-@JsonIgnoreProperties(value = { "user" }, allowGetters = true)
 //@Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -34,7 +34,7 @@ public class Order {
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @JacksonXmlProperty(localName = "orderDate")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd, HH:mm:ss")
     private LocalDateTime orderDate;
 
     @Column(nullable = false)

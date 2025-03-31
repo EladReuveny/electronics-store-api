@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description Service interface for managing shopping cart operations.
+ *
+ * Manages shopping cart operations, such as adding/removing items and calculating totals.
  */
 package com.reuveny.Electronics.service;
 
@@ -24,6 +25,7 @@ public interface ShoppingCartService {
      * @param productId The product ID.
      * @param quantity The quantity of the product.
      * @return The updated shopping cart.
+     * @throws IllegalArgumentException if the shopping cart is not initialized or if the product is out of stock.
      */
     ShoppingCart addProductToCart(Long userId, Long productId, int quantity);
 
@@ -33,6 +35,7 @@ public interface ShoppingCartService {
      * @param userId The user ID.
      * @param productId The product ID.
      * @return The updated shopping cart.
+     * @throws IllegalArgumentException if the cart is empty or not found.
      */
     ShoppingCart removeProductFromCart(Long userId, Long productId);
 
@@ -41,6 +44,7 @@ public interface ShoppingCartService {
      *
      * @param userId The user ID.
      * @return The updated shopping cart.
+     * @throws IllegalArgumentException if the cart is empty or not found.
      */
     ShoppingCart clearCart(Long userId);
 
@@ -49,6 +53,7 @@ public interface ShoppingCartService {
      *
      * @param userId The user ID.
      * @return The created order.
+     * @throws IllegalStateException if the cart is empty.
      */
     Order checkout(Long userId);
 }

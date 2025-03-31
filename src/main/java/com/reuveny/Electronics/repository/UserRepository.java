@@ -1,8 +1,8 @@
 /**
-* @package Electronics
- * 
+ * @package Electronics
  * @author Elad Reuveny
- * @description 
+ *
+ * Handles database queries for user authentication and profile data.
  */
 package com.reuveny.Electronics.repository;
 

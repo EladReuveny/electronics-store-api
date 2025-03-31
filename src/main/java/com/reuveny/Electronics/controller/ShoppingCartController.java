@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description Controller for managing shopping cart operations.
+ *
+ *  Controller for managing shopping cart operations.
  */
 package com.reuveny.Electronics.controller;
 

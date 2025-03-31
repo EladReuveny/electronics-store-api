@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description
+ *
+ * Provides database access for wishlist management.
  */
 package com.reuveny.Electronics.repository;
 

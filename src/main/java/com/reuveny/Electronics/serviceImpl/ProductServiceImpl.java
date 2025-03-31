@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description Implementation of ProductService to manage product-related operations.
+ *
+ * Implementation of ProductService to manage product-related operations.
  */
 package com.reuveny.Electronics.serviceImpl;
 

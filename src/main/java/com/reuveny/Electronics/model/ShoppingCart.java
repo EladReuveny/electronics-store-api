@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description
+ *
+ * Represents a user's shopping cart, holding items and total amount.
  */
 package com.reuveny.Electronics.model;
 

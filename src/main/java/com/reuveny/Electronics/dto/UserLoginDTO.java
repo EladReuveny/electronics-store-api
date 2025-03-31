@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description
+ *
+ * Represents user login credentials with email and password.
  */
 package com.reuveny.Electronics.dto;
 

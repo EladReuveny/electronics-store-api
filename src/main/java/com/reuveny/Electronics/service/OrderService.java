@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description Service interface for managing orders in the system, including retrieving orders by user and updating order statuses.
+ *
+ * Handles order-related operations, including order creation, cancellation, and status updates.
  */
 package com.reuveny.Electronics.service;
 
@@ -28,10 +29,20 @@ public interface OrderService {
 
     /**
      * Updates the status of an existing order.
+     * ( Admin only)
      *
      * @param orderId The ID of the order to update.
      * @param status  The new status to set for the order.
      * @return The updated order.
+     * @throws IllegalArgumentException If the order with the specified ID is not found.
      */
-    Order updateOrderStatus(Long orderId, Status status); // Admin
+    Order updateOrderStatus(Long orderId, Status status);
+
+    /**
+     * Cancels an order if it is within 14 days of the order date.
+     *
+     * @param orderId The ID of the order to cancel.
+     * @throws IllegalArgumentException If the order is not found or cannot be canceled.
+     */
+    void cancelOrder(Long orderId);
 }

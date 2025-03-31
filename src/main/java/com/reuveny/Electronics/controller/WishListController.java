@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description Controller for handling wish list operations, allowing users to
+ *
+ * Controller for handling wish list operations, allowing users to
  * add, remove, retrieve, and move products from the wish list.
  */
 package com.reuveny.Electronics.controller;

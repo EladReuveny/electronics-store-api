@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description
+ *
+ * Manages CRUD operations for individual items within orders or shopping carts.
  */
 package com.reuveny.Electronics.repository;
 

@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description Controller for managing user operations.
+ *
+ * Controller for managing user operations.
  */
 package com.reuveny.Electronics.controller;
 

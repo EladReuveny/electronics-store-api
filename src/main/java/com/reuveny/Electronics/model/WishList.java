@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description
+ *
+ * Represents a user's wishlist containing selected products.
  */
 package com.reuveny.Electronics.model;
 

@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description Implementation of the UserService interface to handle user-related operations.
+ *
+ * Implementation of the UserService interface to handle user-related operations.
  */
 package com.reuveny.Electronics.serviceImpl;
 

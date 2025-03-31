@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description Implementation of the ShoppingCartService to manage shopping cart operations.
+ *
+ * Implementation of the ShoppingCartService to manage shopping cart operations.
  */
 package com.reuveny.Electronics.serviceImpl;
 

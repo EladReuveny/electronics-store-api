@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description
+ *
+ * Implementation of ItemService to manage item-related operations.
  */
 package com.reuveny.Electronics.serviceImpl;
 

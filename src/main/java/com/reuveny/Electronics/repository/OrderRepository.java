@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description
+ *
+ * Provides database access for order-related operations.
  */
 package com.reuveny.Electronics.repository;
 

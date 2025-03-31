@@ -1,7 +1,8 @@
 /**
  * @package Electronics
  * @author Elad Reuveny
- * @description
+ *
+ * Manages database interactions for shopping cart data.
  */
 package com.reuveny.Electronics.repository;
 
