@@ -9,6 +9,7 @@ package com.reuveny.Electronics.serviceImpl;
 import com.reuveny.Electronics.model.Category;
 import com.reuveny.Electronics.model.Product;
 import com.reuveny.Electronics.repository.ProductRepository;
+import com.reuveny.Electronics.repository.WishListRepository;
 import com.reuveny.Electronics.service.ProductService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private WishListRepository wishListRepository;
 
     @Override
     public Product getProductById(Long productId) throws IllegalArgumentException {
@@ -45,6 +49,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product addProduct(Product product) {
+        if(product.getPrice() < 0) {
+            throw new IllegalArgumentException("Price has to be a positive value.");
+        } else if(product.getStockQuantity() < 0) {
+            throw new IllegalArgumentException("Stock quantity has to be a positive value.");
+        }
+
         return productRepository.save(product);
     }
 
@@ -80,5 +90,13 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void deleteProduct(Long productId) {
         productRepository.deleteById(productId);
+    }
+
+    @Override
+    @Transactional
+    public void removeSelectedProducts(List<Long> productIds) {
+        productRepository.removeProductReferences(productIds);
+
+        productRepository.deleteAllById(productIds);
     }
 }

@@ -10,6 +10,8 @@ import com.reuveny.Electronics.model.Category;
 import com.reuveny.Electronics.model.Product;
 import com.reuveny.Electronics.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -67,12 +69,17 @@ public class ProductController {
     /**
      * Add a new product.
      *
-     * @param product The product to be added.
-     * @return The created product.
+     * @param product The product details in the request body.
+     * @return The created product or an error message if validation fails.
      */
     @PostMapping("")
-    public Product addProduct(@RequestBody Product product) {
-        return productService.addProduct(product);
+    public ResponseEntity<?> addProduct(@RequestBody Product product) {
+        try {
+            Product addedProduct = productService.addProduct(product);
+            return ResponseEntity.ok(addedProduct);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     /**
@@ -95,5 +102,17 @@ public class ProductController {
     @DeleteMapping("/{productId}")
     public void deleteProductById(@PathVariable("productId") Long id) {
         productService.deleteProduct(id);
+    }
+
+    /**
+     * Remove selected products.
+     *
+     * @param productIds A list of product IDs to be removed.
+     * @return A response message confirming deletion.
+     */
+    @PutMapping("/remove-selected-products")
+    public ResponseEntity<String> removeSelectedProducts(@RequestBody List<Long> productIds) {
+        productService.removeSelectedProducts(productIds);
+        return ResponseEntity.ok("Selected products deleted successfully.");
     }
 }

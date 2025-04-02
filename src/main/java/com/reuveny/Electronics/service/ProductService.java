@@ -45,10 +45,11 @@ public interface ProductService {
     List<Product> getProductsByCategory(Category category);
 
     /**
-     * Adds a new product to the database.
+     * Adds a new product to the system.
      *
-     * @param product The product to add.
-     * @return The saved product.
+     * @param product The product to be added.
+     * @return The created product.
+     * @throws IllegalArgumentException If the price or stock quantity is negative.
      */
     Product addProduct(Product product);
 
@@ -69,4 +70,13 @@ public interface ProductService {
      * @param productId The ID of the product to delete.
      */
     void deleteProduct(Long productId);
+
+    /**
+     * Removes selected products from the system.
+     * First, it removes references from wishlists to avoid foreign key constraints.
+     * Then, it deletes the selected products from the database.
+     *
+     * @param productIds A list of product IDs to be removed.
+     */
+    public void removeSelectedProducts(List<Long> productIds);
 }
