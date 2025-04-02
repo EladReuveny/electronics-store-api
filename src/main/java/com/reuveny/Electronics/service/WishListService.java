@@ -10,50 +10,50 @@ import com.reuveny.Electronics.model.WishList;
 
 public interface WishListService {
     /**
-     * Retrieves the wish list for a given user.
+     * Retrieves the wishlist associated with a specific user.
      *
-     * @param userId The ID of the user.
-     * @return The wish list associated with the user.
+     * @param userId the ID of the user whose wishlist is to be retrieved
+     * @return the wishlist of the user
      * @throws IllegalArgumentException if no wishlist is found for the given user
      */
     WishList getWishListByUserId(Long userId);
 
     /**
-     * Adds a product to the user's wish list.
+     * Adds a product to the user's wishlist.
      *
-     * @param userId The ID of the user.
-     * @param productId The ID of the product to add.
-     * @return The updated wish list.
+     * @param userId the ID of the user
+     * @param productId the ID of the product to be added
+     * @return the updated wishlist
      * @throws IllegalArgumentException if the wishlist or product is not found or if the product already exists in the wishlist
      */
     WishList addProductToWishList(Long userId, Long productId);
 
     /**
-     * Removes a product from the user's wish list.
+     * Removes a product from the user's wishlist.
      *
-     * @param userId The ID of the user.
-     * @param productId The ID of the product to remove.
-     * @return The updated wish list.
+     * @param userId the ID of the user
+     * @param productId the ID of the product to be removed
+     * @return the updated wishlist
      * @throws IllegalArgumentException if the wishlist is empty or the product does not exist in the wishlist
      */
     WishList removeProductFromWishList(Long userId, Long productId);
 
     /**
-     * Moves a product from the wish list to the shopping cart.
+     * Moves a product from the wishlist to the shopping cart, updating stock and quantities.
      *
-     * @param userId The ID of the user.
-     * @param productId The ID of the product to move.
-     * @param quantity  The quantity of the product to move.
-     * @return The updated wish list after removing the product.
+     * @param userId the ID of the user
+     * @param productId the ID of the product to be moved
+     * @param quantity the quantity of the product to be moved
+     * @return the updated wishlist
      * @throws IllegalArgumentException if the wishlist, product, or shopping cart is not found, or if there is insufficient stock
      */
     WishList moveToShoppingCart(Long userId, Long productId, int quantity);
 
     /**
-     * Clears all products from the user's wish list.
+     * Clears all products from the user's wishlist.
      *
-     * @param userId The ID of the user.
-     * @return The empty wish list.
+     * @param userId the ID of the user
+     * @return the cleared wishlist
      * @throws IllegalArgumentException if the wishlist is empty or not found
      */
     WishList clearWishList(Long userId);

@@ -13,27 +13,27 @@ import java.util.List;
 
 public interface OrderService {
     /**
-     * Retrieves a list of orders for a specific user by their user ID.
+     * Retrieves all orders placed by a user, identified by their user ID.
      *
      * @param userId The ID of the user whose orders are to be fetched.
-     * @return List of orders associated with the given user.
+     * @return A list of orders made by the specified user.
      */
     List<Order> getOrdersByUserId(Long userId);
 
     /**
-     * Retrieves a list of all orders in the system.
+     * Retrieves all orders in the system.
      *
-     * @return List of all orders.
+     * @return A list of all orders across all users.
      */
     List<Order> getAllOrders();
 
     /**
-     * Updates the status of an existing order.
-     * ( Admin only)
+     * Updates the status of an order.
+     * This operation is typically available to an admin to update the order's status (e.g., "Shipped", "Delivered").
      *
-     * @param orderId The ID of the order to update.
-     * @param status  The new status to set for the order.
-     * @return The updated order.
+     * @param orderId The ID of the order to be updated.
+     * @param status  The new status to be applied to the order.
+     * @return The updated order object after the status change.
      * @throws IllegalArgumentException If the order with the specified ID is not found.
      */
     Order updateOrderStatus(Long orderId, Status status);

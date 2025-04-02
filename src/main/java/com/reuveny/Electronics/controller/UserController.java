@@ -7,6 +7,7 @@
 package com.reuveny.Electronics.controller;
 
 import com.reuveny.Electronics.dto.UserLoginDTO;
+import com.reuveny.Electronics.dto.UserForgotPasswordDTO;
 import com.reuveny.Electronics.dto.UserUpdateDTO;
 import com.reuveny.Electronics.model.User;
 import com.reuveny.Electronics.service.UserService;
@@ -102,7 +103,24 @@ public class UserController {
      * @param userId The ID of the user to delete.
      */
     @DeleteMapping("/{userId}/delete")
-    void deleteUserById(@PathVariable("userId") Long userId) {
+    public void deleteUserById(@PathVariable("userId") Long userId) {
         userService.deleteUser(userId);
     }
+
+    /**
+     * Handles the forgot password request.
+     *
+     * @param userForgotPasswordDTO The DTO containing user details for password recovery.
+     * @return ResponseEntity containing the authenticated user if successful,
+     *         or an error message if the request fails.
+     */
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestBody UserForgotPasswordDTO userForgotPasswordDTO) {
+        try {
+            User authenticatedUser = userService.forgotPassword(userForgotPasswordDTO);
+            return ResponseEntity.ok(authenticatedUser);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+   }
 }

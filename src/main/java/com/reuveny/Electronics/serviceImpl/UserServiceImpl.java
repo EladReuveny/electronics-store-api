@@ -7,6 +7,7 @@
 package com.reuveny.Electronics.serviceImpl;
 
 import com.reuveny.Electronics.dto.UserLoginDTO;
+import com.reuveny.Electronics.dto.UserForgotPasswordDTO;
 import com.reuveny.Electronics.dto.UserUpdateDTO;
 import com.reuveny.Electronics.model.Role;
 import com.reuveny.Electronics.model.ShoppingCart;
@@ -19,19 +20,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-    /**
-     * Retrieves a user by their unique ID.
-     *
-     * @param userId the ID of the user to be retrieved
-     * @return the user associated with the given userId
-     * @throws IllegalArgumentException if the user with the given ID does not exist
-     */
     @Override
     public User getUserById(Long userId) throws IllegalArgumentException {
         return userRepository
@@ -40,26 +35,11 @@ public class UserServiceImpl implements UserService {
                         new IllegalArgumentException("User hasn't been found"));
     }
 
-    /**
-     * Retrieves all users from the repository.
-     *
-     * @return a list of all users
-     */
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    /**
-     * Registers a new user in the system.
-     * If the email is already in use, it throws an exception.
-     * Sets the user's role based on their email (admin if the email contains '-admin@').
-     * Initializes a shopping cart and wish list for the new user.
-     *
-     * @param user the user object to be registered
-     * @return the newly registered user
-     * @throws IllegalArgumentException if any required field is missing or if the email is already in use
-     */
     @Override
     @Transactional
     public User registerUser(User user) throws IllegalArgumentException {
@@ -86,15 +66,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
-    /**
-     * Updates the details of an existing user.
-     * Allows changes to the email, password, address, and phone number.
-     *
-     * @param userId the ID of the user to be updated
-     * @param userUpdateDTO DTO containing the new user details
-     * @return the updated user
-     * @throws IllegalArgumentException if the user does not exist or if email is already taken
-     */
     @Override
     @Transactional
     public User updateUser(Long userId, UserUpdateDTO userUpdateDTO) {
@@ -132,25 +103,11 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new IllegalArgumentException("User " + userId + " hasn't been found."));
     }
 
-
-    /**
-     * Deletes a user by their unique ID.
-     *
-     * @param userId the ID of the user to be deleted
-     */
     @Override
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
     }
 
-    /**
-     * Authenticates a user by their email and password.
-     * Throws an exception if the email or password is incorrect.
-     *
-     * @param userLoginDTO DTO containing the email and password of the user
-     * @return the authenticated user
-     * @throws IllegalArgumentException if the email or password is incorrect
-     */
     @Override
     public User loginUser(UserLoginDTO userLoginDTO) {
         User user = userRepository
@@ -163,5 +120,29 @@ public class UserServiceImpl implements UserService {
         }
         return user;
 
+    }
+
+    @Override
+    public User forgotPassword(UserForgotPasswordDTO userForgotPasswordDTO) {
+        User registeredUser = userRepository
+                .findByEmail(userForgotPasswordDTO.getEmail())
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Email '" + userForgotPasswordDTO.getEmail() + "' isn't registered."));
+
+        if(userForgotPasswordDTO.getAddress() == null
+                || userForgotPasswordDTO.getAddress().isEmpty()) {
+            throw new IllegalArgumentException("Address cannot be empty.");
+        } else if(userForgotPasswordDTO.getPhone() == null
+                || userForgotPasswordDTO.getPhone().isEmpty()) {
+            throw new IllegalArgumentException("Phone cannot be empty.");
+        }
+
+        if(!registeredUser.getAddress().matches(userForgotPasswordDTO.getAddress())) {
+            throw new IllegalArgumentException("Wrong address.");
+        } else if(!Objects.equals(registeredUser.getPhone(), userForgotPasswordDTO.getPhone())) {
+            throw new IllegalArgumentException("Wrong phone.");
+        }
+
+        return registeredUser;
     }
 }
