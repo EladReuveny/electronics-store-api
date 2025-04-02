@@ -35,36 +35,16 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private ProductRepository productRepository;
 
-    /**
-     * Retrieves all orders placed by a user, identified by their user ID.
-     *
-     * @param userId The ID of the user whose orders are to be fetched.
-     * @return A list of orders made by the specified user.
-     */
     @Override
     public List<Order> getOrdersByUserId(Long userId) {
         return orderRepository.findByUserId(userId);
     }
 
-    /**
-     * Retrieves all orders in the system.
-     *
-     * @return A list of all orders across all users.
-     */
     @Override
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
     }
 
-    /**
-     * Updates the status of an order.
-     * This operation is typically available to an admin to update the order's status (e.g., "Shipped", "Delivered").
-     *
-     * @param orderId The ID of the order to be updated.
-     * @param status  The new status to be applied to the order.
-     * @return The updated order object after the status change.
-     * @throws IllegalArgumentException If the order with the specified ID is not found.
-     */
     @Override
     @Transactional
     public Order updateOrderStatus(Long orderId, Status status) {
@@ -76,12 +56,6 @@ public class OrderServiceImpl implements OrderService {
                 .orElseThrow(() -> new IllegalArgumentException("Order " + orderId + " hasn't been found."));
     }
 
-    /**
-     * Cancels an order if it is within 14 days of the order date.
-     *
-     * @param orderId The ID of the order to cancel.
-     * @throws IllegalArgumentException If the order is not found or cannot be canceled.
-     */
     @Override
     @Transactional
     public void cancelOrder(Long orderId) {

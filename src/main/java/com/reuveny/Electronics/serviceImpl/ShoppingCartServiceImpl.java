@@ -31,26 +31,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Autowired
     private OrderRepository orderRepository;
 
-    /**
-     * Retrieves the shopping cart associated with a user.
-     *
-     * @param userId The ID of the user.
-     * @return The user's shopping cart.
-     */
     @Override
     public ShoppingCart getCartByUserId(Long userId) {
         return shoppingCartRepository.findCartByUserId(userId);
     }
 
-    /**
-     * Adds a product to the user's shopping cart.
-     *
-     * @param userId    The ID of the user.
-     * @param productId The ID of the product to add.
-     * @param quantity  The quantity of the product to add.
-     * @return The updated shopping cart.
-     * @throws IllegalArgumentException if the shopping cart is not initialized or if the product is out of stock.
-     */
     @Override
     @Transactional
     public ShoppingCart addProductToCart(Long userId, Long productId, int quantity) {
@@ -99,14 +84,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return shoppingCartRepository.save(shoppingCart);
     }
 
-    /**
-     * Removes a product from the user's shopping cart.
-     *
-     * @param userId    The ID of the user.
-     * @param productId The ID of the product to remove.
-     * @return The updated shopping cart.
-     * @throws IllegalArgumentException if the cart is empty or not found.
-     */
     @Override
     @Transactional
     public ShoppingCart removeProductFromCart(Long userId, Long productId) {
@@ -138,13 +115,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return shoppingCartRepository.save(shoppingCart);
     }
 
-    /**
-     * Clears all products from the user's shopping cart.
-     *
-     * @param userId The ID of the user.
-     * @return The updated empty shopping cart.
-     * @throws IllegalArgumentException if the cart is empty or not found.
-     */
     @Override
     @Transactional
     public ShoppingCart clearCart(Long userId) {
@@ -167,13 +137,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return shoppingCartRepository.save(shoppingCart);
     }
 
-    /**
-     * Processes the checkout operation, creating an order from the shopping cart.
-     *
-     * @param userId The ID of the user.
-     * @return The created order.
-     * @throws IllegalStateException if the cart is empty.
-     */
     @Override
     @Transactional
     public Order checkout(Long userId) {
