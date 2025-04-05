@@ -7,6 +7,7 @@
 package com.reuveny.Electronics.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
@@ -22,25 +23,32 @@ import java.util.List;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JacksonXmlProperty(localName = "id")
     private Long id;
 
     @Column(nullable = false)
+    @JacksonXmlProperty(localName = "name")
     private String name;
 
     @Column(nullable = true, columnDefinition = "TEXT")
+    @JacksonXmlProperty(localName = "description")
     private String description;
 
     @Column(nullable = false)
+    @JacksonXmlProperty(localName = "price")
     private Double price;
 
     @Column(nullable = false, columnDefinition = "TEXT")
+    @JacksonXmlProperty(localName = "imgUrl")
     private String imgUrl;
 
     @Column(nullable = false)
+    @JacksonXmlProperty(localName = "stockQuantity")
     private Integer stockQuantity;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
+    @JacksonXmlProperty(localName = "category")
     private Category category;
 
     @OneToMany(
