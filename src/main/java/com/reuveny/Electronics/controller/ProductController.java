@@ -6,6 +6,7 @@
  */
 package com.reuveny.Electronics.controller;
 
+import com.reuveny.Electronics.dto.ProductUpdateDTO;
 import com.reuveny.Electronics.model.Category;
 import com.reuveny.Electronics.model.Product;
 import com.reuveny.Electronics.service.ProductService;
@@ -86,12 +87,18 @@ public class ProductController {
      * Update an existing product.
      *
      * @param id The product ID.
-     * @param product The updated product details.
+     * @param productUpdateDTO The updated product details.
      * @return The updated product.
      */
     @PutMapping("/{productId}")
-    public Product updateProduct(@PathVariable("productId") Long id, @RequestBody Product product) {
-        return productService.updateProduct(id, product);
+    public ResponseEntity<?> updateProduct(@PathVariable("productId") Long id
+            , @RequestBody ProductUpdateDTO productUpdateDTO) {
+        try {
+            Product updatedProduct = productService.updateProduct(id, productUpdateDTO);
+            return ResponseEntity.ok(updatedProduct);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     /**

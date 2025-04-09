@@ -6,6 +6,7 @@
  */
 package com.reuveny.Electronics.service;
 
+import com.reuveny.Electronics.dto.ProductUpdateDTO;
 import com.reuveny.Electronics.model.Category;
 import com.reuveny.Electronics.model.Product;
 
@@ -58,11 +59,11 @@ public interface ProductService {
      * Only non-null fields in the provided product object will be updated.
      *
      * @param productId The ID of the product to update.
-     * @param product   The product object containing updated details.
+     * @param productUpdateDTO The product object containing updated details.
      * @return The updated product.
      * @throws IllegalArgumentException if the product is not found.
      */
-    Product updateProduct(Long productId, Product product);
+    Product updateProduct(Long productId, ProductUpdateDTO productUpdateDTO);
 
     /**
      * Deletes a product by its ID.
@@ -78,5 +79,5 @@ public interface ProductService {
      *
      * @param productIds A list of product IDs to be removed.
      */
-    public void removeSelectedProducts(List<Long> productIds);
+    void removeSelectedProducts(List<Long> productIds);
 }
