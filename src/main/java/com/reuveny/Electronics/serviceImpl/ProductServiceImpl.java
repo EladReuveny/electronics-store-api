@@ -6,6 +6,7 @@
  */
 package com.reuveny.Electronics.serviceImpl;
 
+import com.reuveny.Electronics.dto.ProductUpdateDTO;
 import com.reuveny.Electronics.model.Category;
 import com.reuveny.Electronics.model.Product;
 import com.reuveny.Electronics.repository.ProductRepository;
@@ -60,26 +61,32 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public Product updateProduct(Long productId, Product product) {
+    public Product updateProduct(Long productId, ProductUpdateDTO productUpdateDTO) {
         return productRepository.findById(productId)
                 .map(existingProduct -> {
-                    if (product.getName() != null) {
-                        existingProduct.setName(product.getName());
+                    if (productUpdateDTO.getName() != null && !productUpdateDTO.getName().isBlank()) {
+                        existingProduct.setName(productUpdateDTO.getName());
                     }
-                    if (product.getDescription() != null) {
-                        existingProduct.setDescription(product.getDescription());
+                    if (productUpdateDTO.getDescription() != null) {
+                        existingProduct.setDescription(productUpdateDTO.getDescription());
                     }
-                    if (product.getPrice() != null) {
-                        existingProduct.setPrice(product.getPrice());
+                    if (productUpdateDTO.getPrice() != null) {
+                        if(productUpdateDTO.getPrice() < 0) {
+                            throw new IllegalArgumentException("Price has to be a positive value.");
+                        }
+                        existingProduct.setPrice(productUpdateDTO.getPrice());
                     }
-                    if (product.getImgUrl() != null) {
-                        existingProduct.setImgUrl(product.getImgUrl());
+                    if (productUpdateDTO.getImgUrl() != null && !productUpdateDTO.getImgUrl().isBlank()) {
+                        existingProduct.setImgUrl(productUpdateDTO.getImgUrl());
                     }
-                    if (product.getStockQuantity() != null) {
-                        existingProduct.setStockQuantity(product.getStockQuantity());
+                    if (productUpdateDTO.getStockQuantity() != null) {
+                        if(productUpdateDTO.getStockQuantity() < 0) {
+                            throw new IllegalArgumentException("Stock quantity has to be a positive value.");
+                        }
+                        existingProduct.setStockQuantity(productUpdateDTO.getStockQuantity());
                     }
-                    if (product.getCategory() != null) {
-                        existingProduct.setCategory(product.getCategory());
+                    if (productUpdateDTO.getCategory() != null) {
+                        existingProduct.setCategory(productUpdateDTO.getCategory());
                     }
 
                     return productRepository.save(existingProduct);
