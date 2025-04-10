@@ -22,7 +22,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findProductsByCategory(Category category);
 
-    @Query(value = "DELETE FROM wishlists_products wp where product_id IN (:productIds)"
+    @Query(value = "DELETE FROM wishlists_products wp WHERE product_id IN (:productIds)"
             , nativeQuery = true)
     @Modifying
     void removeProductReferences(@Param("productIds") List<Long> productIds);
