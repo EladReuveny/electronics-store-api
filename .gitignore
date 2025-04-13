@@ -34,3 +34,6 @@ build/
 
 # Spring Boot config files
 src/main/resources/application.properties
+
+# Environment/Secrets
+.env
