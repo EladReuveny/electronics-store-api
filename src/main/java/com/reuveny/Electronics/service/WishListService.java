@@ -21,7 +21,7 @@ public interface WishListService {
     /**
      * Adds a product to the user's wishlist.
      *
-     * @param userId the ID of the user
+     * @param userId    the ID of the user
      * @param productId the ID of the product to be added
      * @return the updated wishlist
      * @throws IllegalArgumentException if the wishlist or product is not found or if the product already exists in the wishlist
@@ -31,7 +31,7 @@ public interface WishListService {
     /**
      * Removes a product from the user's wishlist.
      *
-     * @param userId the ID of the user
+     * @param userId    the ID of the user
      * @param productId the ID of the product to be removed
      * @return the updated wishlist
      * @throws IllegalArgumentException if the wishlist is empty or the product does not exist in the wishlist
@@ -41,9 +41,9 @@ public interface WishListService {
     /**
      * Moves a product from the wishlist to the shopping cart, updating stock and quantities.
      *
-     * @param userId the ID of the user
+     * @param userId    the ID of the user
      * @param productId the ID of the product to be moved
-     * @param quantity the quantity of the product to be moved
+     * @param quantity  the quantity of the product to be moved
      * @return the updated wishlist
      * @throws IllegalArgumentException if the wishlist, product, or shopping cart is not found, or if there is insufficient stock
      */

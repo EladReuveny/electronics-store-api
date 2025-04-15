@@ -6,8 +6,11 @@
  */
 package com.reuveny.Electronics.serviceImpl;
 
-import com.reuveny.Electronics.model.*;
-        import com.reuveny.Electronics.repository.ProductRepository;
+import com.reuveny.Electronics.model.Item;
+import com.reuveny.Electronics.model.Product;
+import com.reuveny.Electronics.model.ShoppingCart;
+import com.reuveny.Electronics.model.WishList;
+import com.reuveny.Electronics.repository.ProductRepository;
 import com.reuveny.Electronics.repository.ShoppingCartRepository;
 import com.reuveny.Electronics.repository.WishListRepository;
 import com.reuveny.Electronics.service.WishListService;
@@ -37,21 +40,19 @@ public class WishListServiceImpl implements WishListService {
     @Override
     @Transactional
     public WishList addProductToWishList(Long userId, Long productId) {
-        WishList wishList = wishListRepository
-                .findWishListByUserId(userId);
-        if(wishList == null) {
-            throw new IllegalArgumentException("Wishlist " + userId +" hasn't been found.");
+        WishList wishList = wishListRepository.findWishListByUserId(userId);
+        if (wishList == null) {
+            throw new IllegalArgumentException("Wishlist " + userId + " hasn't been found.");
         }
-
-        Product product = productRepository
-                .findById(productId)
-                .orElseThrow(() -> new IllegalArgumentException("Product " + productId + " hasn't been found."));
-
+        Product product = productRepository.findById(productId)
+                                           .orElseThrow(() -> new IllegalArgumentException(
+                                                   "Product " + productId + " hasn't been found."));
         List<Product> productsList = wishList.getProducts();
-        if(!productsList.contains(product)) {
+        if (!productsList.contains(product)) {
             productsList.add(product);
         } else {
-            throw new IllegalArgumentException("Product " + productId + " is already exist in the wishlist.");
+            throw new IllegalArgumentException(
+                    "Product " + productId + " is already exist in the wishlist.");
         }
         return wishListRepository.save(wishList);
     }
@@ -59,21 +60,20 @@ public class WishListServiceImpl implements WishListService {
     @Override
     @Transactional
     public WishList removeProductFromWishList(Long userId, Long productId) {
-        WishList wishList = wishListRepository
-                .findWishListByUserId(userId);
-        if(wishList == null || wishList.getProducts().isEmpty()) {
-            throw new IllegalArgumentException("Wishlist " + userId +" hasn't been found.");
+        WishList wishList = wishListRepository.findWishListByUserId(userId);
+        if (wishList == null || wishList.getProducts()
+                                        .isEmpty()) {
+            throw new IllegalArgumentException("Wishlist " + userId + " hasn't been found.");
         }
-
-        Product product = productRepository
-                .findById(productId)
-                .orElseThrow(() -> new IllegalArgumentException("Product " + productId + " hasn't been found."));
-
+        Product product = productRepository.findById(productId)
+                                           .orElseThrow(() -> new IllegalArgumentException(
+                                                   "Product " + productId + " hasn't been found."));
         List<Product> productsList = wishList.getProducts();
-        if(productsList.contains(product)) {
+        if (productsList.contains(product)) {
             productsList.remove(product);
         } else {
-            throw new IllegalArgumentException("Product " + productId + " isn't existing in the wishlist.");
+            throw new IllegalArgumentException(
+                    "Product " + productId + " isn't existing in the wishlist.");
         }
         return wishListRepository.save(wishList);
     }
@@ -82,55 +82,58 @@ public class WishListServiceImpl implements WishListService {
     @Transactional
     public WishList moveToShoppingCart(Long userId, Long productId, int quantity) {
         WishList wishList = wishListRepository.findWishListByUserId(userId);
-        if(wishList == null || wishList.getProducts().isEmpty()) {
-            throw new IllegalArgumentException("Wishlist " + userId +" hasn't been found.");
+        if (wishList == null || wishList.getProducts()
+                                        .isEmpty()) {
+            throw new IllegalArgumentException("Wishlist " + userId + " hasn't been found.");
         }
-
         Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new IllegalArgumentException("Product hasn't been found."));
-
-        ShoppingCart shoppingCart = wishList.getUser().getShoppingCart();
-
-        Optional<Item> existingItem = shoppingCart.getItems().stream()
-                .filter(item -> item.getProduct().getId().equals(productId))
-                .findAny();
-
+                                           .orElseThrow(() -> new IllegalArgumentException(
+                                                   "Product hasn't been found."));
+        ShoppingCart shoppingCart = wishList.getUser()
+                                            .getShoppingCart();
+        Optional<Item> existingItem = shoppingCart.getItems()
+                                                  .stream()
+                                                  .filter(item -> item.getProduct()
+                                                                      .getId()
+                                                                      .equals(productId))
+                                                  .findAny()
+                ;
         if (existingItem.isPresent()) {
-            if(product.getStockQuantity() + existingItem.get().getQuantity() < quantity) {
-                throw new IllegalArgumentException("Insufficient stock: Requested " + quantity +
-                        ", but only " + product.getStockQuantity() + " left in stock.");
+            if (product.getStockQuantity() + existingItem.get()
+                                                         .getQuantity() < quantity) {
+                throw new IllegalArgumentException(
+                        "Insufficient stock: Requested " + quantity + ", but only " +
+                        product.getStockQuantity() + " left in stock.");
             }
-
-            product.setStockQuantity(product.getStockQuantity()
-                    + existingItem.get().getQuantity() - quantity);
-            existingItem.get().setQuantity(quantity);
+            product.setStockQuantity(product.getStockQuantity() + existingItem.get()
+                                                                              .getQuantity() -
+                                     quantity);
+            existingItem.get()
+                        .setQuantity(quantity);
         } else {
-            if(product.getStockQuantity() - quantity < 0) {
-                throw new IllegalArgumentException("Insufficient stock: Requested " + quantity +
-                        ", but only " + product.getStockQuantity() + " left in stock.");
+            if (product.getStockQuantity() - quantity < 0) {
+                throw new IllegalArgumentException(
+                        "Insufficient stock: Requested " + quantity + ", but only " +
+                        product.getStockQuantity() + " left in stock.");
             }
-
             Item item = new Item();
             item.setQuantity(quantity);
             item.setProduct(product);
             item.setShoppingCart(shoppingCart);
-
-            shoppingCart.getItems().add(item);
-
+            shoppingCart.getItems()
+                        .add(item);
             product.setStockQuantity(product.getStockQuantity() - quantity);
         }
         productRepository.save(product);
-
         double newTotalAmount = 0.0;
-        for(Item item: shoppingCart.getItems()) {
-            newTotalAmount += item.getProduct().getPrice() * item.getQuantity();
+        for (Item item : shoppingCart.getItems()) {
+            newTotalAmount += item.getProduct()
+                                  .getPrice() * item.getQuantity();
         }
         shoppingCart.setTotalAmount(newTotalAmount);
-
         shoppingCartRepository.save(shoppingCart);
-
-        wishList.getProducts().remove(product);
-
+        wishList.getProducts()
+                .remove(product);
         return wishList;
     }
 
@@ -138,12 +141,13 @@ public class WishListServiceImpl implements WishListService {
     @Transactional
     public WishList clearWishList(Long userId) {
         WishList wishList = wishListRepository.findWishListByUserId(userId);
-        if(wishList == null || wishList.getProducts().isEmpty()) {
-            throw new IllegalArgumentException("Wish list for user " + userId + " is empty or not found.");
+        if (wishList == null || wishList.getProducts()
+                                        .isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Wish list for user " + userId + " is empty or not found.");
         }
-
-        wishList.getProducts().clear();
-
+        wishList.getProducts()
+                .clear();
         return wishListRepository.save(wishList);
     }
 }

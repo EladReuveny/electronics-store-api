@@ -58,7 +58,7 @@ public interface ProductService {
      * Updates an existing product's details.
      * Only non-null fields in the provided product object will be updated.
      *
-     * @param productId The ID of the product to update.
+     * @param productId        The ID of the product to update.
      * @param productUpdateDTO The product object containing updated details.
      * @return The updated product.
      * @throws IllegalArgumentException if the product is not found.

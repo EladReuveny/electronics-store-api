@@ -8,7 +8,6 @@ package com.reuveny.Electronics.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
@@ -34,7 +33,10 @@ public class Order {
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @JacksonXmlProperty(localName = "orderDate")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd, HH:mm:ss")
+    @JsonFormat(
+            shape = JsonFormat.Shape.STRING,
+            pattern = "yyyy-MM-dd, HH:mm:ss"
+    )
     private LocalDateTime orderDate;
 
     @Column(nullable = false)
@@ -49,13 +51,17 @@ public class Order {
     @OneToMany(
             mappedBy = "order",
             cascade = CascadeType.ALL,
-            orphanRemoval = true)
+            orphanRemoval = true
+    )
     @JacksonXmlElementWrapper(localName = "items")
     @JacksonXmlProperty(localName = "item")
     private List<Item> items;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(
+            name = "user_id",
+            nullable = false
+    )
     @JsonIgnore
     private User user;
 

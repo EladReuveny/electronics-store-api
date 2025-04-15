@@ -8,9 +8,9 @@ package com.reuveny.Electronics.model;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,7 +24,10 @@ public class User {
     @JacksonXmlProperty(localName = "id")
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(
+            unique = true,
+            nullable = false
+    )
     @JacksonXmlProperty(localName = "email")
     private String email;
 
@@ -46,20 +49,29 @@ public class User {
 
     @OneToOne(
             cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    @JoinColumn(name = "wish_list_id", nullable = false)
+            orphanRemoval = true
+    )
+    @JoinColumn(
+            name = "wish_list_id",
+            nullable = false
+    )
     private WishList wishList;
 
     @OneToOne(
             cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    @JoinColumn(name = "shopping_cart_id", nullable = false)
+            orphanRemoval = true
+    )
+    @JoinColumn(
+            name = "shopping_cart_id",
+            nullable = false
+    )
     private ShoppingCart shoppingCart;
 
     @OneToMany(
             mappedBy = "user",
             cascade = CascadeType.ALL,
-            orphanRemoval = true)
+            orphanRemoval = true
+    )
     @JacksonXmlProperty(localName = "orders")
     private List<Order> orders;
 

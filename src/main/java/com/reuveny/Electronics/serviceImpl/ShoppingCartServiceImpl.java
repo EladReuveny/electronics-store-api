@@ -40,47 +40,51 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Transactional
     public ShoppingCart addProductToCart(Long userId, Long productId, int quantity) {
         ShoppingCart shoppingCart = shoppingCartRepository.findCartByUserId(userId);
-        if(shoppingCart == null)
+        if (shoppingCart == null)
             throw new IllegalArgumentException("Shopping cart must be initialized first.");
-
         Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new IllegalArgumentException("Product " + productId + " hasn't been found."));
-
-        Optional<Item> existingItem = shoppingCart.getItems().stream()
-                .filter(item -> item.getProduct().getId().equals(productId))
-                .findAny();
-
-        if(existingItem.isPresent()) {
-            if(product.getStockQuantity() + existingItem.get().getQuantity() < quantity) {
-                throw new IllegalArgumentException("Insufficient stock: Requested " + quantity +
-                        ", but only " + product.getStockQuantity() + " left in stock.");
+                                           .orElseThrow(() -> new IllegalArgumentException(
+                                                   "Product " + productId + " hasn't been found."));
+        Optional<Item> existingItem = shoppingCart.getItems()
+                                                  .stream()
+                                                  .filter(item -> item.getProduct()
+                                                                      .getId()
+                                                                      .equals(productId))
+                                                  .findAny()
+                ;
+        if (existingItem.isPresent()) {
+            if (product.getStockQuantity() + existingItem.get()
+                                                         .getQuantity() < quantity) {
+                throw new IllegalArgumentException(
+                        "Insufficient stock: Requested " + quantity + ", but only " +
+                        product.getStockQuantity() + " left in stock.");
             }
-            product.setStockQuantity(product.getStockQuantity()
-                    + existingItem.get().getQuantity() - quantity);
-            existingItem.get().setQuantity(quantity);
+            product.setStockQuantity(product.getStockQuantity() + existingItem.get()
+                                                                              .getQuantity() -
+                                     quantity);
+            existingItem.get()
+                        .setQuantity(quantity);
         } else {
-            if(product.getStockQuantity() - quantity < 0) {
-                throw new IllegalArgumentException("Insufficient stock: Requested " + quantity +
-                        ", but only " + product.getStockQuantity() + " left in stock.");
+            if (product.getStockQuantity() - quantity < 0) {
+                throw new IllegalArgumentException(
+                        "Insufficient stock: Requested " + quantity + ", but only " +
+                        product.getStockQuantity() + " left in stock.");
             }
-
             Item item = new Item();
             item.setQuantity(quantity);
             item.setProduct(product);
             item.setShoppingCart(shoppingCart);
-
-            shoppingCart.getItems().add(item);
-
+            shoppingCart.getItems()
+                        .add(item);
             product.setStockQuantity(product.getStockQuantity() - quantity);
         }
         productRepository.save(product);
-
         double newTotalAmount = 0.0;
-        for(Item item: shoppingCart.getItems()) {
-            newTotalAmount += item.getProduct().getPrice() * item.getQuantity();
+        for (Item item : shoppingCart.getItems()) {
+            newTotalAmount += item.getProduct()
+                                  .getPrice() * item.getQuantity();
         }
         shoppingCart.setTotalAmount(newTotalAmount);
-
         return shoppingCartRepository.save(shoppingCart);
     }
 
@@ -88,30 +92,31 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Transactional
     public ShoppingCart removeProductFromCart(Long userId, Long productId) {
         ShoppingCart shoppingCart = shoppingCartRepository.findCartByUserId(userId);
-        if(shoppingCart == null || shoppingCart.getItems().isEmpty()) {
-            throw new IllegalArgumentException("Shopping cart for user " + userId + " is empty or not found.");
+        if (shoppingCart == null || shoppingCart.getItems()
+                                                .isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Shopping cart for user " + userId + " is empty or not found.");
         }
-
-        Optional<Item> itemToRemove = shoppingCart.getItems().stream()
-                .filter((item) -> item.getProduct().getId().equals(productId))
-                .findFirst();
-
+        Optional<Item> itemToRemove = shoppingCart.getItems()
+                                                  .stream()
+                                                  .filter((item) -> item.getProduct()
+                                                                        .getId()
+                                                                        .equals(productId))
+                                                  .findFirst()
+                ;
         itemToRemove.ifPresent((item) -> {
             Product product = item.getProduct();
-            product.setStockQuantity(product.getStockQuantity()
-                    + item.getQuantity());
+            product.setStockQuantity(product.getStockQuantity() + item.getQuantity());
             productRepository.save(product);
-
-            shoppingCart.getItems().remove(item);
+            shoppingCart.getItems()
+                        .remove(item);
         });
-
-
         double newTotalAmount = 0.0;
-        for(Item item: shoppingCart.getItems()) {
-            newTotalAmount += item.getProduct().getPrice() * item.getQuantity();
+        for (Item item : shoppingCart.getItems()) {
+            newTotalAmount += item.getProduct()
+                                  .getPrice() * item.getQuantity();
         }
         shoppingCart.setTotalAmount(newTotalAmount);
-
         return shoppingCartRepository.save(shoppingCart);
     }
 
@@ -119,21 +124,23 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Transactional
     public ShoppingCart clearCart(Long userId) {
         ShoppingCart shoppingCart = shoppingCartRepository.findCartByUserId(userId);
-        if(shoppingCart == null || shoppingCart.getItems().isEmpty()) {
-            throw new IllegalArgumentException("Shopping cart for user " + userId + " is empty or not found.");
+        if (shoppingCart == null || shoppingCart.getItems()
+                                                .isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Shopping cart for user " + userId + " is empty or not found.");
         }
-
-        shoppingCart.getItems().forEach((item -> {
-            Product product = item.getProduct();
-            product.setStockQuantity(product.getStockQuantity()
-                    + item.getQuantity());
-            productRepository.save(product);
-        }));
-
-        shoppingCart.getItems().clear();
-
+        shoppingCart.getItems()
+                    .forEach((
+                                     item -> {
+                                         Product product = item.getProduct();
+                                         product.setStockQuantity(
+                                                 product.getStockQuantity() + item.getQuantity());
+                                         productRepository.save(product);
+                                     }
+                             ));
+        shoppingCart.getItems()
+                    .clear();
         shoppingCart.setTotalAmount(0.0);
-
         return shoppingCartRepository.save(shoppingCart);
     }
 
@@ -141,18 +148,16 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Transactional
     public Order checkout(Long userId) {
         ShoppingCart shoppingCart = shoppingCartRepository.findCartByUserId(userId);
-        if (shoppingCart == null || shoppingCart.getItems().isEmpty()) {
+        if (shoppingCart == null || shoppingCart.getItems()
+                                                .isEmpty()) {
             throw new IllegalStateException("Shopping cart is empty. Add items before checkout.");
         }
-
         Order order = new Order();
         order.setOrderDate(LocalDateTime.now());
         order.setTotalAmount(shoppingCart.getTotalAmount());
         order.setStatus(Status.PENDING);
         order.setUser(shoppingCart.getUser());
-
         List<Item> orderItems = new ArrayList<>();
-
         for (Item cartItem : shoppingCart.getItems()) {
             Item orderItem = new Item();
             orderItem.setQuantity(cartItem.getQuantity());
@@ -160,15 +165,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             orderItem.setOrder(order);
             orderItems.add(orderItem);
         }
-
         order.setItems(orderItems);
-
-        shoppingCart.getItems().clear();
-
+        shoppingCart.getItems()
+                    .clear();
         shoppingCart.setTotalAmount(0.0);
-
         shoppingCartRepository.save(shoppingCart);
-
         return orderRepository.save(order);
     }
 }
