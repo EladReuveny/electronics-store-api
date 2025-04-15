@@ -14,6 +14,9 @@ import com.reuveny.Electronics.model.Order;
 import com.reuveny.Electronics.model.Status;
 import com.reuveny.Electronics.service.OrderService;
 import com.reuveny.Electronics.xml.OrderListWrapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,75 +28,92 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/order")
 @CrossOrigin(origins = "http://localhost:5173")
+@Tag(
+        name = "Order Controller",
+        description = "Handles all order-related endpoints"
+)
 public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    /**
-     * Retrieves all orders for a specific user.
-     *
-     * @param userId The ID of the user whose orders are to be retrieved.
-     * @return ResponseEntity containing the list of orders or 404 if none found.
-     */
+    @Operation(
+            summary = "Get orders for a specific user",
+            parameters = {
+                    @Parameter(
+                            name = "userId",
+                            description = "The ID of the user",
+                            required = true
+                    )
+            }
+    )
     @GetMapping("/user/{userId}")
-    public List<Order> getOrdersByUserId(@PathVariable("userId") Long userId) {
+    public List<Order> getOrdersByUserId(
+            @PathVariable("userId") Long userId
+    ) {
         return orderService.getOrdersByUserId(userId);
     }
 
-    /**
-     * Retrieves all orders in the system.
-     *
-     * @return ResponseEntity containing the list of orders.
-     */
+    @Operation(
+            summary = "Get all orders"
+    )
     @GetMapping("")
     public List<Order> getAllOrders() {
         return orderService.getAllOrders();
     }
 
-    /**
-     * Retrieves all orders in XML format.
-     *
-     * @return ResponseEntity containing the XML representation of all orders.
-     * @throws JsonProcessingException If an error occurs during XML conversion.
-     */
-    @GetMapping(value = "/all/xml-format", produces = MediaType.APPLICATION_XML_VALUE)
+    @Operation(
+            summary = "Get all orders in XML format"
+    )
+    @GetMapping(
+            value = "/all/xml-format",
+            produces = MediaType.APPLICATION_XML_VALUE
+    )
     public ResponseEntity<String> getAllOrdersAsXML() throws JsonProcessingException {
         List<Order> orders = orderService.getAllOrders();
-
         XmlMapper xmlMapper = new XmlMapper();
         xmlMapper.registerModule(new JavaTimeModule());
         xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);
-
         String xmlString = xmlMapper.writeValueAsString(new OrderListWrapper(orders));
-
         return ResponseEntity.ok(xmlString);
     }
 
-    /**
-     * Updates the status of an order.
-     *
-     * @param orderId The ID of the order to update.
-     * @param status  The new status of the order.
-     * @return ResponseEntity containing the updated order or a 404 status if not found.
-     */
+    @Operation(
+            summary = "Update order status",
+            parameters = {
+                    @Parameter(
+                            name = "orderId",
+                            description = "The ID of the order to update",
+                            required = true
+                    ),
+                    @Parameter(
+                            name = "status",
+                            description = "The new status to apply to the order",
+                            required = true
+                    )
+            }
+    )
     @PutMapping("/{orderId}")
-    public Order updateOrderStatus(@PathVariable("orderId") Long orderId, @RequestBody Status status) {
+    public Order updateOrderStatus(
+            @PathVariable("orderId") Long orderId,
+            @RequestBody Status status
+    ) {
         return orderService.updateOrderStatus(orderId, status);
     }
 
-    /**
-     * Cancels an order if it is within the allowed cancellation period (e.g., 14 days).
-     *
-     * @param orderId The ID of the order to cancel.
-     * @return A response entity with a success message or an error message if the cancellation is not allowed.
-     */
+    @Operation(
+            summary = "Cancel an order",
+            description = "Cancels an order if within the allowed cancellation period."
+    )
     @DeleteMapping("/{orderId}")
-    public ResponseEntity<String> cancelOrder(@PathVariable("orderId") Long orderId) {
+    public ResponseEntity<String> cancelOrder(
+            @PathVariable("orderId") Long orderId
+    ) {
         try {
             orderService.cancelOrder(orderId);
             return ResponseEntity.ok("Order " + orderId + " has been canceled successfully.");
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                                 .body(e.getMessage());
         }
     }
 }

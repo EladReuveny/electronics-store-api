@@ -9,9 +9,8 @@ package com.reuveny.Electronics.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -30,7 +29,10 @@ public class Product {
     @JacksonXmlProperty(localName = "name")
     private String name;
 
-    @Column(nullable = true, columnDefinition = "TEXT")
+    @Column(
+            nullable = true,
+            columnDefinition = "TEXT"
+    )
     @JacksonXmlProperty(localName = "description")
     private String description;
 
@@ -38,7 +40,10 @@ public class Product {
     @JacksonXmlProperty(localName = "price")
     private Double price;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
     @JacksonXmlProperty(localName = "imgUrl")
     private String imgUrl;
 
@@ -54,7 +59,8 @@ public class Product {
     @OneToMany(
             mappedBy = "product",
             cascade = CascadeType.ALL,
-            orphanRemoval = true)
+            orphanRemoval = true
+    )
     @JsonIgnore
     private List<Item> items;
 

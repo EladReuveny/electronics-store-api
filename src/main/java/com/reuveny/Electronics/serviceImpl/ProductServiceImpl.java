@@ -28,9 +28,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product getProductById(Long productId) throws IllegalArgumentException {
-        return productRepository.
-                findById(productId).
-                orElseThrow(() -> new IllegalArgumentException("Product hasn't been found"));
+        return productRepository.findById(productId)
+                                .orElseThrow(() -> new IllegalArgumentException(
+                                        "Product hasn't been found"));
     }
 
     @Override
@@ -50,12 +50,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product addProduct(Product product) {
-        if(product.getPrice() < 0) {
+        if (product.getPrice() < 0) {
             throw new IllegalArgumentException("Price has to be a positive value.");
-        } else if(product.getStockQuantity() < 0) {
+        } else if (product.getStockQuantity() < 0) {
             throw new IllegalArgumentException("Stock quantity has to be a positive value.");
         }
-
         return productRepository.save(product);
     }
 
@@ -63,35 +62,43 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public Product updateProduct(Long productId, ProductUpdateDTO productUpdateDTO) {
         return productRepository.findById(productId)
-                .map(existingProduct -> {
-                    if (productUpdateDTO.getName() != null && !productUpdateDTO.getName().isBlank()) {
-                        existingProduct.setName(productUpdateDTO.getName());
-                    }
-                    if (productUpdateDTO.getDescription() != null) {
-                        existingProduct.setDescription(productUpdateDTO.getDescription());
-                    }
-                    if (productUpdateDTO.getPrice() != null) {
-                        if(productUpdateDTO.getPrice() < 0) {
-                            throw new IllegalArgumentException("Price has to be a positive value.");
-                        }
-                        existingProduct.setPrice(productUpdateDTO.getPrice());
-                    }
-                    if (productUpdateDTO.getImgUrl() != null && !productUpdateDTO.getImgUrl().isBlank()) {
-                        existingProduct.setImgUrl(productUpdateDTO.getImgUrl());
-                    }
-                    if (productUpdateDTO.getStockQuantity() != null) {
-                        if(productUpdateDTO.getStockQuantity() < 0) {
-                            throw new IllegalArgumentException("Stock quantity has to be a positive value.");
-                        }
-                        existingProduct.setStockQuantity(productUpdateDTO.getStockQuantity());
-                    }
-                    if (productUpdateDTO.getCategory() != null) {
-                        existingProduct.setCategory(productUpdateDTO.getCategory());
-                    }
-
-                    return productRepository.save(existingProduct);
-                })
-                .orElseThrow(() -> new IllegalArgumentException("Product hasn't been found"));
+                                .map(existingProduct -> {
+                                    if (productUpdateDTO.getName() != null &&
+                                        !productUpdateDTO.getName()
+                                                         .isBlank()) {
+                                        existingProduct.setName(productUpdateDTO.getName());
+                                    }
+                                    if (productUpdateDTO.getDescription() != null) {
+                                        existingProduct.setDescription(
+                                                productUpdateDTO.getDescription());
+                                    }
+                                    if (productUpdateDTO.getPrice() != null) {
+                                        if (productUpdateDTO.getPrice() < 0) {
+                                            throw new IllegalArgumentException(
+                                                    "Price has to be a positive value.");
+                                        }
+                                        existingProduct.setPrice(productUpdateDTO.getPrice());
+                                    }
+                                    if (productUpdateDTO.getImgUrl() != null &&
+                                        !productUpdateDTO.getImgUrl()
+                                                         .isBlank()) {
+                                        existingProduct.setImgUrl(productUpdateDTO.getImgUrl());
+                                    }
+                                    if (productUpdateDTO.getStockQuantity() != null) {
+                                        if (productUpdateDTO.getStockQuantity() < 0) {
+                                            throw new IllegalArgumentException(
+                                                    "Stock quantity has to be a positive value.");
+                                        }
+                                        existingProduct.setStockQuantity(
+                                                productUpdateDTO.getStockQuantity());
+                                    }
+                                    if (productUpdateDTO.getCategory() != null) {
+                                        existingProduct.setCategory(productUpdateDTO.getCategory());
+                                    }
+                                    return productRepository.save(existingProduct);
+                                })
+                                .orElseThrow(() -> new IllegalArgumentException(
+                                        "Product hasn't been found"));
     }
 
     @Override
@@ -103,7 +110,6 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public void removeSelectedProducts(List<Long> productIds) {
         productRepository.removeProductReferences(productIds);
-
         productRepository.deleteAllById(productIds);
     }
 }

@@ -6,7 +6,10 @@
  */
 package com.reuveny.Electronics.serviceImpl;
 
-import com.reuveny.Electronics.model.*;
+import com.reuveny.Electronics.model.Item;
+import com.reuveny.Electronics.model.Order;
+import com.reuveny.Electronics.model.Product;
+import com.reuveny.Electronics.model.Status;
 import com.reuveny.Electronics.repository.OrderRepository;
 import com.reuveny.Electronics.repository.ProductRepository;
 import com.reuveny.Electronics.repository.ShoppingCartRepository;
@@ -22,7 +25,6 @@ import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-
     @Autowired
     private OrderRepository orderRepository;
 
@@ -49,31 +51,31 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public Order updateOrderStatus(Long orderId, Status status) {
         return orderRepository.findById(orderId)
-                .map((existingOrder) -> {
-                    existingOrder.setStatus(status);
-                    return orderRepository.save(existingOrder);
-                })
-                .orElseThrow(() -> new IllegalArgumentException("Order " + orderId + " hasn't been found."));
+                              .map((existingOrder) -> {
+                                  existingOrder.setStatus(status);
+                                  return orderRepository.save(existingOrder);
+                              })
+                              .orElseThrow(() -> new IllegalArgumentException(
+                                      "Order " + orderId + " hasn't been found."));
     }
 
     @Override
     @Transactional
     public void cancelOrder(Long orderId) {
         Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new IllegalArgumentException("Order " + orderId + " hasn't been found."));
-
+                                     .orElseThrow(() -> new IllegalArgumentException(
+                                             "Order " + orderId + " hasn't been found."));
         Duration duration = Duration.between(order.getOrderDate(), LocalDateTime.now());
-        if(duration.toDays() <= 14) {
-            for(Item item: order.getItems()) {
+        if (duration.toDays() <= 14) {
+            for (Item item : order.getItems()) {
                 Product product = item.getProduct();
-                product.setStockQuantity(product.getStockQuantity()
-                        + item.getQuantity());
-
+                product.setStockQuantity(product.getStockQuantity() + item.getQuantity());
                 productRepository.save(product);
             }
             orderRepository.deleteById(orderId);
         } else {
-            throw new IllegalArgumentException("Order can be canceled only within 14 days start from the order date.");
+            throw new IllegalArgumentException(
+                    "Order can be canceled only within 14 days start from the order date.");
         }
     }
 }

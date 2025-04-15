@@ -6,8 +6,8 @@
  */
 package com.reuveny.Electronics.serviceImpl;
 
-import com.reuveny.Electronics.dto.UserLoginDTO;
 import com.reuveny.Electronics.dto.UserForgotPasswordDTO;
+import com.reuveny.Electronics.dto.UserLoginDTO;
 import com.reuveny.Electronics.dto.UserUpdateDTO;
 import com.reuveny.Electronics.model.Role;
 import com.reuveny.Electronics.model.ShoppingCart;
@@ -29,10 +29,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(Long userId) throws IllegalArgumentException {
-        return userRepository
-                .findById(userId)
-                .orElseThrow(() ->
-                        new IllegalArgumentException("User hasn't been found"));
+        return userRepository.findById(userId)
+                             .orElseThrow(
+                                     () -> new IllegalArgumentException("User hasn't been found"));
     }
 
     @Override
@@ -43,26 +42,21 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User registerUser(User user) throws IllegalArgumentException {
-        if (user == null || user.getEmail() == null
-                || user.getPassword() == null
-                || user.getAddress() == null
-                || user.getPhone() == null) {
+        if (user == null || user.getEmail() == null || user.getPassword() == null ||
+            user.getAddress() == null || user.getPhone() == null) {
             throw new IllegalArgumentException("All user's fields are required.");
         }
-
         if (userRepository.existsByEmail(user.getEmail())) {
             throw new IllegalArgumentException("Email is already taken.");
         }
-
-        if(user.getEmail().contains("-admin@")) {
+        if (user.getEmail()
+                .contains("-admin@")) {
             user.setRole(Role.ADMIN);
         } else {
             user.setRole(Role.SUBSCRIBED);
         }
-
         user.setShoppingCart(new ShoppingCart());
         user.setWishList(new WishList());
-
         return userRepository.save(user);
     }
 
@@ -70,37 +64,48 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User updateUser(Long userId, UserUpdateDTO userUpdateDTO) {
         return userRepository.findById(userId)
-                .map(existingUser -> {
-                    if (userUpdateDTO.getNewEmail() != null && !userUpdateDTO.getNewEmail().isEmpty()) {
-                        if (userRepository.existsByEmail(userUpdateDTO.getNewEmail())) {
-                            throw new IllegalArgumentException("Email is already taken. Please try a different email.");
-                        }
-                        existingUser.setEmail(userUpdateDTO.getNewEmail());
-                    }
-
-                    if (userUpdateDTO.getCurrentPassword() != null && !userUpdateDTO.getCurrentPassword().isEmpty()) {
-                        if (!userUpdateDTO.getCurrentPassword().matches(existingUser.getPassword())) {
-                            throw new IllegalArgumentException("Current password doesn't match. Please try again.");
-                        }
-
-                        if (userUpdateDTO.getNewPassword() != null && !userUpdateDTO.getNewPassword().isEmpty()) {
-                            existingUser.setPassword(userUpdateDTO.getNewPassword());
-                        } else {
-                            throw new IllegalArgumentException("New password cannot be null.");
-                        }
-                    }
-
-                    if (userUpdateDTO.getNewAddress() != null && !userUpdateDTO.getNewAddress().isEmpty()) {
-                        existingUser.setAddress(userUpdateDTO.getNewAddress());
-                    }
-
-                    if (userUpdateDTO.getNewPhone() != null && !userUpdateDTO.getNewPhone().isEmpty()) {
-                        existingUser.setPhone(userUpdateDTO.getNewPhone());
-                    }
-
-                    return userRepository.save(existingUser);
-                })
-                .orElseThrow(() -> new IllegalArgumentException("User " + userId + " hasn't been found."));
+                             .map(existingUser -> {
+                                 if (userUpdateDTO.getNewEmail() != null &&
+                                     !userUpdateDTO.getNewEmail()
+                                                   .isEmpty()) {
+                                     if (userRepository.existsByEmail(
+                                             userUpdateDTO.getNewEmail())) {
+                                         throw new IllegalArgumentException(
+                                                 "Email is already taken. Please try a different email.");
+                                     }
+                                     existingUser.setEmail(userUpdateDTO.getNewEmail());
+                                 }
+                                 if (userUpdateDTO.getCurrentPassword() != null &&
+                                     !userUpdateDTO.getCurrentPassword()
+                                                   .isEmpty()) {
+                                     if (!userUpdateDTO.getCurrentPassword()
+                                                       .matches(existingUser.getPassword())) {
+                                         throw new IllegalArgumentException(
+                                                 "Current password doesn't match. Please try again.");
+                                     }
+                                     if (userUpdateDTO.getNewPassword() != null &&
+                                         !userUpdateDTO.getNewPassword()
+                                                       .isEmpty()) {
+                                         existingUser.setPassword(userUpdateDTO.getNewPassword());
+                                     } else {
+                                         throw new IllegalArgumentException(
+                                                 "New password cannot be null.");
+                                     }
+                                 }
+                                 if (userUpdateDTO.getNewAddress() != null &&
+                                     !userUpdateDTO.getNewAddress()
+                                                   .isEmpty()) {
+                                     existingUser.setAddress(userUpdateDTO.getNewAddress());
+                                 }
+                                 if (userUpdateDTO.getNewPhone() != null &&
+                                     !userUpdateDTO.getNewPhone()
+                                                   .isEmpty()) {
+                                     existingUser.setPhone(userUpdateDTO.getNewPhone());
+                                 }
+                                 return userRepository.save(existingUser);
+                             })
+                             .orElseThrow(() -> new IllegalArgumentException(
+                                     "User " + userId + " hasn't been found."));
     }
 
     @Override
@@ -110,39 +115,35 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User loginUser(UserLoginDTO userLoginDTO) {
-        User user = userRepository
-                .findByEmail(userLoginDTO.getEmail())
-                .orElseThrow(() ->
-                        new IllegalArgumentException("Email or password given are incorrect."));
-
-        if (!user.getPassword().matches(userLoginDTO.getPassword())) {
+        User user = userRepository.findByEmail(userLoginDTO.getEmail())
+                                  .orElseThrow(() -> new IllegalArgumentException(
+                                          "Email or password given are incorrect."));
+        if (!user.getPassword()
+                 .matches(userLoginDTO.getPassword())) {
             throw new IllegalArgumentException("Incorrect password. Try again.");
         }
         return user;
-
     }
 
     @Override
     public User forgotPassword(UserForgotPasswordDTO userForgotPasswordDTO) {
-        User registeredUser = userRepository
-                .findByEmail(userForgotPasswordDTO.getEmail())
-                .orElseThrow(() ->
-                        new IllegalArgumentException("Email '" + userForgotPasswordDTO.getEmail() + "' isn't registered."));
-
-        if(userForgotPasswordDTO.getAddress() == null
-                || userForgotPasswordDTO.getAddress().isEmpty()) {
+        User registeredUser = userRepository.findByEmail(userForgotPasswordDTO.getEmail())
+                                            .orElseThrow(() -> new IllegalArgumentException(
+                                                    "Email '" + userForgotPasswordDTO.getEmail() +
+                                                    "' isn't registered."));
+        if (userForgotPasswordDTO.getAddress() == null || userForgotPasswordDTO.getAddress()
+                                                                               .isEmpty()) {
             throw new IllegalArgumentException("Address cannot be empty.");
-        } else if(userForgotPasswordDTO.getPhone() == null
-                || userForgotPasswordDTO.getPhone().isEmpty()) {
+        } else if (userForgotPasswordDTO.getPhone() == null || userForgotPasswordDTO.getPhone()
+                                                                                    .isEmpty()) {
             throw new IllegalArgumentException("Phone cannot be empty.");
         }
-
-        if(!registeredUser.getAddress().matches(userForgotPasswordDTO.getAddress())) {
+        if (!registeredUser.getAddress()
+                           .matches(userForgotPasswordDTO.getAddress())) {
             throw new IllegalArgumentException("Wrong address.");
-        } else if(!Objects.equals(registeredUser.getPhone(), userForgotPasswordDTO.getPhone())) {
+        } else if (!Objects.equals(registeredUser.getPhone(), userForgotPasswordDTO.getPhone())) {
             throw new IllegalArgumentException("Wrong phone.");
         }
-
         return registeredUser;
     }
 }

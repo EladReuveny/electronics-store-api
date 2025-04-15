@@ -9,7 +9,6 @@ package com.reuveny.Electronics.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
@@ -34,7 +33,8 @@ public class ShoppingCart {
     @OneToMany(
             mappedBy = "shoppingCart",
             cascade = CascadeType.ALL,
-            orphanRemoval = true)
+            orphanRemoval = true
+    )
     private List<Item> items;
 
     public Long getId() {

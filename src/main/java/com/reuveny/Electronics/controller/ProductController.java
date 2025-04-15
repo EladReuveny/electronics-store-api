@@ -10,6 +10,9 @@ import com.reuveny.Electronics.dto.ProductUpdateDTO;
 import com.reuveny.Electronics.model.Category;
 import com.reuveny.Electronics.model.Product;
 import com.reuveny.Electronics.service.ProductService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,103 +23,140 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/product")
 @CrossOrigin(origins = "http://localhost:5173")
+@Tag(
+        name = "Product Controller",
+        description = "Handles all product-related endpoints"
+)
 public class ProductController {
     @Autowired
     private ProductService productService;
 
-    /**
-     * Fetch a product by its ID.
-     *
-     * @param id The product ID.
-     * @return The product if found.
-     */
+    @Operation(
+            summary = "Get product by ID",
+            parameters = {
+                    @Parameter(
+                            name = "productId",
+                            description = "The ID of the product to retrieve",
+                            required = true
+                    )
+            }
+    )
     @GetMapping("/{productId}")
     public Product getProductById(@PathVariable("productId") Long id) {
         return productService.getProductById(id);
     }
 
-    /**
-     * Retrieve all products.
-     *
-     * @return List of all products.
-     */
+    @Operation(summary = "Get all products")
     @GetMapping("")
     public List<Product> getAllProducts() {
         return productService.getAllProducts();
     }
 
-    /**
-     * Search for products by name.
-     *
-     * @param name The search query.
-     * @return List of products matching the search.
-     */
+    @Operation(
+            summary = "Search products by name",
+            parameters = {
+                    @Parameter(
+                            name = "query",
+                            description = "The name or partial name of the product to search for",
+                            required = true
+                    )
+            }
+    )
     @GetMapping("/search")
     public List<Product> searchProductsByName(@RequestParam("query") String name) {
         return productService.searchProductsByName(name);
     }
 
-    /**
-     * Fetch products by category.
-     *
-     * @param category The product category.
-     * @return List of products in the category.
-     */
+    @Operation(
+            summary = "Get products by category",
+            parameters = {
+                    @Parameter(
+                            name = "category",
+                            description = "The category to filter products by",
+                            required = true
+                    )
+            }
+    )
     @GetMapping("/category/{category}")
     public List<Product> getProductsByCategory(@PathVariable("category") Category category) {
         return productService.getProductsByCategory(category);
     }
 
-    /**
-     * Add a new product.
-     *
-     * @param product The product details in the request body.
-     * @return The created product or an error message if validation fails.
-     */
+    @Operation(
+            summary = "Add a new product",
+            parameters = {
+                    @Parameter(
+                            name = "product",
+                            description = "The product to add",
+                            required = true
+                    )
+            }
+    )
     @PostMapping("")
     public ResponseEntity<?> addProduct(@RequestBody Product product) {
         try {
             Product addedProduct = productService.addProduct(product);
             return ResponseEntity.ok(addedProduct);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                                 .body(e.getMessage());
         }
     }
 
-    /**
-     * Update an existing product.
-     *
-     * @param id The product ID.
-     * @param productUpdateDTO The updated product details.
-     * @return The updated product.
-     */
+    @Operation(
+            summary = "Update a product",
+            parameters = {
+                    @Parameter(
+                            name = "productId",
+                            description = "The ID of the product to update",
+                            required = true
+                    ),
+                    @Parameter(
+                            name = "productUpdateDTO",
+                            description = "The product object containing updated details",
+                            required = true
+                    )
+            }
+    )
     @PutMapping("/{productId}")
-    public ResponseEntity<?> updateProduct(@PathVariable("productId") Long id
-            , @RequestBody ProductUpdateDTO productUpdateDTO) {
+    public ResponseEntity<?> updateProduct(
+            @PathVariable("productId") Long id,
+            @RequestBody ProductUpdateDTO productUpdateDTO
+    ) {
         try {
             Product updatedProduct = productService.updateProduct(id, productUpdateDTO);
             return ResponseEntity.ok(updatedProduct);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                                 .body(e.getMessage());
         }
     }
 
-    /**
-     * Delete a product by its ID.
-     *
-     * @param id The product ID.
-     */
+    @Operation(
+            summary = "Delete a product",
+            parameters = {
+                    @Parameter(
+                            name = "productId",
+                            description = "The ID of the product to delete",
+                            required = true
+                    )
+            }
+    )
     @DeleteMapping("/{productId}")
     public void deleteProductById(@PathVariable("productId") Long id) {
         productService.deleteProduct(id);
     }
 
-    /**
-     * Remove selected products.
-     *
-     * @param productIds A list of product IDs to be removed.
-     * @return A response message confirming deletion.
-     */
+    @Operation(
+            summary = "Remove selected products by their IDs",
+            parameters = {
+                    @Parameter(
+                            name = "productIds",
+                            description = "A list of product IDs to be deleted",
+                            required = true
+                    )
+            }
+    )
     @PutMapping("/remove-selected-products")
     public ResponseEntity<String> removeSelectedProducts(@RequestBody List<Long> productIds) {
         productService.removeSelectedProducts(productIds);

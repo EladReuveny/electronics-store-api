@@ -1,6 +1,11 @@
 # 🛍️ Electronics E-Commerce Application
 
-An advanced Full - Stack web application for an electronics store built with **Spring Boot**, **React**, **PostgreSQL**, and more. This application supports both user and admin roles and provides a complete shopping experience, including authentication, product browsing, cart, wishlist, orders management and tracking, and administrative product control.
+An advanced Full - Stack web application for an electronics
+store built with **Spring Boot**, **React**, **PostgreSQL**,
+and more. This application supports both user and admin
+roles and provides a complete shopping experience, including
+authentication, product browsing, cart, wishlist, orders
+management and tracking, and administrative product control.
 
 ---
 
@@ -124,20 +129,22 @@ An advanced Full - Stack web application for an electronics store built with **S
 - **Orders (Admin View)**  
   ![Admin Orders](https://imgur.com/SNUIqB4.png)
 
-  - **Order Details (Admin View)**  
-    ![Order Details](https://imgur.com/lkMJoYc.png)
+    - **Order Details (Admin View)**  
+      ![Order Details](https://imgur.com/lkMJoYc.png)
 
 - **View All Orders (XML Format)**  
   ![XML Orders](https://imgur.com/OZIsEQG.png)
 
-👉 [**View All Screenshots in Gallery**](https://imgur.com/a/CvkAFHJ)
+👉 [**View All Screenshots in Gallery
+**](https://imgur.com/a/CvkAFHJ)
 
 ---
 
 ## <a id="demo">🎥 Demo</a>
 
 🚀 **Live Demo**  
- You can view the live demo of the application at: [https://electronics-store-app.netlify.app/](https://electronics-store-app.netlify.app/)
+You can view the live demo of the application
+at: [https://electronics-store-app.netlify.app/](https://electronics-store-app.netlify.app/)
 
 ---
 
@@ -145,8 +152,10 @@ An advanced Full - Stack web application for an electronics store built with **S
 
 ### 🔧 Backend (Spring Boot)
 
-1. Clone the repository and open the backend folder in your IDE.
-2. Update your PostgreSQL (Or any other database) configuration in `application.properties`:
+1. Clone the repository and open the backend folder in your
+   IDE.
+2. Update your PostgreSQL (Or any other database)
+   configuration in `application.properties`:
 
    ```properties
    # PostgreSQL configuration (For Example)
@@ -157,7 +166,8 @@ An advanced Full - Stack web application for an electronics store built with **S
    ```
 
 3. Make sure PostgreSQL is running and the database exists.
-4. Run `ElectronicsApplication.java` to start the backend server.
+4. Run `ElectronicsApplication.java` to start the backend
+   server.
 
 ---
 
@@ -195,71 +205,84 @@ npm run dev
 
 1. **Register / Login**
 
-   - Navigate to the home page.
-   - Click Register to create a new account or Login if you already have one.
-   - You can use Forgot Password to retrieve your password via email, address and phone number.
+    - Navigate to the home page.
+    - Click Register to create a new account or Login if you
+      already have one.
+    - You can use Forgot Password to retrieve your password
+      via email, address and phone number.
 
 2. **Browsing Products**
 
-   - Users are allowed to view products without having an account.
-   - View all available products categorized by type (e.g., Smart Phones, Laptops, Tablets, Tv's).
-   - Use the Search Bar to find specific items.
-   - Apply Filters to narrow down products by price or hide out-of-stock items.
+    - Users are allowed to view products without having an
+      account.
+    - View all available products categorized by type (e.g.,
+      Smart Phones, Laptops, Tablets, Tv's).
+    - Use the Search Bar to find specific items.
+    - Apply Filters to narrow down products by price or hide
+      out-of-stock items.
 
 3. **Product Details**
 
-   - Click on any product to view detailed information, such as:
-     - Price
-     - Description
-     - Stock availability
-     - Category
-     - Images.
-   - You can Add to Cart or Wishlist from this page.
+    - Click on any product to view detailed information,
+      such as:
+        - Price
+        - Description
+        - Stock availability
+        - Category
+        - Images.
+    - You can Add to Cart or Wishlist from this page.
 
 4. **Wishlist**
 
-   - Accessible via the top navigation bar.
-   - Add and remove items for future purchases.
+    - Accessible via the top navigation bar.
+    - Add and remove items for future purchases.
 
 5. **Shopping Cart**
 
-   - Accessible via the top navigation bar.
-   - View all selected items for purchase.
-   - Update quantities or remove items.
-   - View product details if necessary.
-   - Proceed to Checkout to place an order.
+    - Accessible via the top navigation bar.
+    - View all selected items for purchase.
+    - Update quantities or remove items.
+    - View product details if necessary.
+    - Proceed to Checkout to place an order.
 
 6. **Orders**
 
-   - View past orders and their details.
-   - Click any order to see more detailed information.
-   - Cancel an Order: If the order was placed within a specified time after checkout, you can choose to cancel the order directly from the order details page.
+    - View past orders and their details.
+    - Click any order to see more detailed information.
+    - Cancel an Order: If the order was placed within a
+      specified time after checkout, you can choose to
+      cancel the order directly from the order details page.
 
 7. **Profile Settings**
-   - Accessible via the top navigation bar.
-   - Update your email, password, address and phone number.
-   - Modifying application's appearance settings, such as display preferences.
+    - Accessible via the top navigation bar.
+    - Update your email, password, address and phone number.
+    - Modifying application's appearance settings, such as
+      display preferences.
 
 🛠️ **Admin Flow**
 
 1. **Login**
 
-   - Admins must log in with admin credentials.
+    - Admins must log in with admin credentials.
 
 2. **Manage Products**
 
-   - View all products.
-   - Add new products and edit/delete existing ones.
+    - View all products.
+    - Add new products and edit/delete existing ones.
 
 3. **Managing and Tracking Orders**
 
-   - Access the Orders page to view all the orders.
-   - Option to view orders in XML format for export or integration.
-   - Option to modify order's status as needed (e.g., "Pending", "Packaging", "Shipped", "Delivered", "Canceled").
+    - Access the Orders page to view all the orders.
+    - Option to view orders in XML format for export or
+      integration.
+    - Option to modify order's status as needed (e.g., "
+      Pending", "Packaging", "Shipped", "Delivered", "
+      Canceled").
 
 🖼️ **Screenshots Reference**
 
-- To view real screenshots of the application, visit the <a href="#screenshots">📸 Screenshots</a> section.
+- To view real screenshots of the application, visit
+  the <a href="#screenshots">📸 Screenshots</a> section.
 
 ---
 

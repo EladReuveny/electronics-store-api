@@ -11,7 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserForgotPasswordDTO {
     private String email;
+
     private String address;
+
     private String phone;
 
     public String getEmail() {
