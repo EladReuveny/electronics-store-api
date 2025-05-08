@@ -6,6 +6,7 @@
  */
 package com.reuveny.Electronics.serviceImpl;
 
+import com.reuveny.Electronics.exception.ResourceNotFoundException;
 import com.reuveny.Electronics.model.*;
 import com.reuveny.Electronics.repository.OrderRepository;
 import com.reuveny.Electronics.repository.ProductRepository;
@@ -43,7 +44,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         if (shoppingCart == null)
             throw new IllegalArgumentException("Shopping cart must be initialized first.");
         Product product = productRepository.findById(productId)
-                                           .orElseThrow(() -> new IllegalArgumentException(
+                                           .orElseThrow(() -> new ResourceNotFoundException(
                                                    "Product " + productId + " hasn't been found."));
         Optional<Item> existingItem = shoppingCart.getItems()
                                                   .stream()
@@ -150,7 +151,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         ShoppingCart shoppingCart = shoppingCartRepository.findCartByUserId(userId);
         if (shoppingCart == null || shoppingCart.getItems()
                                                 .isEmpty()) {
-            throw new IllegalStateException("Shopping cart is empty. Add items before checkout.");
+            throw new IllegalArgumentException(
+                    "Shopping cart is empty. Add items before checkout.");
         }
         Order order = new Order();
         order.setOrderDate(LocalDateTime.now());

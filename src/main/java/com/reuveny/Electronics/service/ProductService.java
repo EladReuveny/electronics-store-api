@@ -6,7 +6,8 @@
  */
 package com.reuveny.Electronics.service;
 
-import com.reuveny.Electronics.dto.ProductUpdateDTO;
+import com.reuveny.Electronics.dto.ProductUpdateDto;
+import com.reuveny.Electronics.exception.ResourceNotFoundException;
 import com.reuveny.Electronics.model.Category;
 import com.reuveny.Electronics.model.Product;
 
@@ -18,7 +19,7 @@ public interface ProductService {
      *
      * @param productId The ID of the product.
      * @return The product if found.
-     * @throws IllegalArgumentException if the product is not found.
+     * @throws ResourceNotFoundException if the product is not found.
      */
     Product getProductById(Long productId);
 
@@ -61,9 +62,10 @@ public interface ProductService {
      * @param productId        The ID of the product to update.
      * @param productUpdateDTO The product object containing updated details.
      * @return The updated product.
-     * @throws IllegalArgumentException if the product is not found.
+     * @throws IllegalArgumentException  if the price or stock quantity is negative.
+     * @throws ResourceNotFoundException if the product is not found.
      */
-    Product updateProduct(Long productId, ProductUpdateDTO productUpdateDTO);
+    Product updateProduct(Long productId, ProductUpdateDto productUpdateDTO);
 
     /**
      * Deletes a product by its ID.

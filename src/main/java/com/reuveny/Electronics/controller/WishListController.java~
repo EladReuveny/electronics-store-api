@@ -65,8 +65,7 @@ public class WishListController {
             @PathVariable("productId") Long productId
     ) {
         WishList wishList = wishListService.addProductToWishList(userId, productId);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                             .body(wishList);
+        return ResponseEntity.status(HttpStatus.CREATED).body(wishList);
     }
 
     @Operation(
@@ -87,8 +86,7 @@ public class WishListController {
     @DeleteMapping("/user/{userId}/remove-product/{productId}")
     public ResponseEntity<WishList> removeProductFromWishList(
             @PathVariable("userId") Long userId,
-            @PathVariable("productId")
-            Long productId
+            @PathVariable("productId") Long productId
     ) {
         WishList wishList = wishListService.removeProductFromWishList(userId, productId);
         return ResponseEntity.ok(wishList);

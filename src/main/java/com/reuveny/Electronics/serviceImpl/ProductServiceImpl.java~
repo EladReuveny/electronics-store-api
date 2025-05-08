@@ -7,6 +7,7 @@
 package com.reuveny.Electronics.serviceImpl;
 
 import com.reuveny.Electronics.dto.ProductUpdateDto;
+import com.reuveny.Electronics.exception.IllegalRequestException;
 import com.reuveny.Electronics.exception.ResourceNotFoundException;
 import com.reuveny.Electronics.model.Category;
 import com.reuveny.Electronics.model.Product;
@@ -52,9 +53,9 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product addProduct(Product product) {
         if (product.getPrice() < 0) {
-            throw new IllegalArgumentException("Price has to be a positive value.");
+            throw new IllegalRequestException("Price has to be a positive value.");
         } else if (product.getStockQuantity() < 0) {
-            throw new IllegalArgumentException("Stock quantity has to be a positive value.");
+            throw new IllegalRequestException("Stock quantity has to be a positive value.");
         }
         return productRepository.save(product);
     }
@@ -75,7 +76,7 @@ public class ProductServiceImpl implements ProductService {
                                     }
                                     if (productUpdateDTO.getPrice() != null) {
                                         if (productUpdateDTO.getPrice() < 0) {
-                                            throw new IllegalArgumentException(
+                                            throw new IllegalRequestException(
                                                     "Price has to be a positive value.");
                                         }
                                         existingProduct.setPrice(productUpdateDTO.getPrice());
@@ -87,7 +88,7 @@ public class ProductServiceImpl implements ProductService {
                                     }
                                     if (productUpdateDTO.getStockQuantity() != null) {
                                         if (productUpdateDTO.getStockQuantity() < 0) {
-                                            throw new IllegalArgumentException(
+                                            throw new IllegalRequestException(
                                                     "Stock quantity has to be a positive value.");
                                         }
                                         existingProduct.setStockQuantity(

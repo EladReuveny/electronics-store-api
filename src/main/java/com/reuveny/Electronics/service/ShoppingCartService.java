@@ -6,6 +6,7 @@
  */
 package com.reuveny.Electronics.service;
 
+import com.reuveny.Electronics.exception.ResourceNotFoundException;
 import com.reuveny.Electronics.model.Order;
 import com.reuveny.Electronics.model.ShoppingCart;
 
@@ -25,7 +26,8 @@ public interface ShoppingCartService {
      * @param productId The ID of the product to add.
      * @param quantity  The quantity of the product to add.
      * @return The updated shopping cart.
-     * @throws IllegalArgumentException if the shopping cart is not initialized or if the product is out of stock.
+     * @throws IllegalArgumentException  if the shopping cart is not initialized or if there is insufficient stock.
+     * @throws ResourceNotFoundException if the product is not found.
      */
     ShoppingCart addProductToCart(Long userId, Long productId, int quantity);
 

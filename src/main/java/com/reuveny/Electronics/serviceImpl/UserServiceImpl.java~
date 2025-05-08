@@ -122,7 +122,7 @@ public class UserServiceImpl implements UserService {
                                           "Email or password given are incorrect."));
         if (!user.getPassword()
                  .matches(userLoginDTO.getPassword())) {
-            throw new IllegalArgumentException("Email or password given are incorrect.");
+            throw new IllegalArgumentException("Incorrect password. Try again.");
         }
         return user;
     }

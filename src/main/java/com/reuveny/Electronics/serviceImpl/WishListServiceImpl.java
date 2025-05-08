@@ -6,6 +6,8 @@
  */
 package com.reuveny.Electronics.serviceImpl;
 
+import com.reuveny.Electronics.exception.ResourceAlreadyExistsException;
+import com.reuveny.Electronics.exception.ResourceNotFoundException;
 import com.reuveny.Electronics.model.Item;
 import com.reuveny.Electronics.model.Product;
 import com.reuveny.Electronics.model.ShoppingCart;
@@ -42,16 +44,16 @@ public class WishListServiceImpl implements WishListService {
     public WishList addProductToWishList(Long userId, Long productId) {
         WishList wishList = wishListRepository.findWishListByUserId(userId);
         if (wishList == null) {
-            throw new IllegalArgumentException("Wishlist " + userId + " hasn't been found.");
+            throw new ResourceNotFoundException("Wishlist " + userId + " hasn't been found.");
         }
         Product product = productRepository.findById(productId)
-                                           .orElseThrow(() -> new IllegalArgumentException(
+                                           .orElseThrow(() -> new ResourceNotFoundException(
                                                    "Product " + productId + " hasn't been found."));
         List<Product> productsList = wishList.getProducts();
         if (!productsList.contains(product)) {
             productsList.add(product);
         } else {
-            throw new IllegalArgumentException(
+            throw new ResourceAlreadyExistsException(
                     "Product " + productId + " is already exist in the wishlist.");
         }
         return wishListRepository.save(wishList);
@@ -63,10 +65,10 @@ public class WishListServiceImpl implements WishListService {
         WishList wishList = wishListRepository.findWishListByUserId(userId);
         if (wishList == null || wishList.getProducts()
                                         .isEmpty()) {
-            throw new IllegalArgumentException("Wishlist " + userId + " hasn't been found.");
+            throw new ResourceNotFoundException("Wishlist " + userId + " hasn't been found.");
         }
         Product product = productRepository.findById(productId)
-                                           .orElseThrow(() -> new IllegalArgumentException(
+                                           .orElseThrow(() -> new ResourceNotFoundException(
                                                    "Product " + productId + " hasn't been found."));
         List<Product> productsList = wishList.getProducts();
         if (productsList.contains(product)) {
@@ -84,11 +86,11 @@ public class WishListServiceImpl implements WishListService {
         WishList wishList = wishListRepository.findWishListByUserId(userId);
         if (wishList == null || wishList.getProducts()
                                         .isEmpty()) {
-            throw new IllegalArgumentException("Wishlist " + userId + " hasn't been found.");
+            throw new ResourceNotFoundException("Wishlist " + userId + " hasn't been found.");
         }
         Product product = productRepository.findById(productId)
-                                           .orElseThrow(() -> new IllegalArgumentException(
-                                                   "Product hasn't been found."));
+                                           .orElseThrow(() -> new ResourceNotFoundException(
+                                                   "Product " + productId + " hasn't been found."));
         ShoppingCart shoppingCart = wishList.getUser()
                                             .getShoppingCart();
         Optional<Item> existingItem = shoppingCart.getItems()

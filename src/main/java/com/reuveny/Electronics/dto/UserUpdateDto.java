@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserUpdateDTO {
+public class UserUpdateDto {
     private String newEmail;
 
     private String currentPassword;

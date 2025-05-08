@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductUpdateDTO {
+public class ProductUpdateDto {
     private String name;
 
     private String description;

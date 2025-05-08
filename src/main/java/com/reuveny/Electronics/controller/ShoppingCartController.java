@@ -39,10 +39,11 @@ public class ShoppingCartController {
             }
     )
     @GetMapping("/user/{userId}")
-    public ShoppingCart getCartByUserId(
+    public ResponseEntity<ShoppingCart> getCartByUserId(
             @PathVariable("userId") Long userId
     ) {
-        return shoppingCartService.getCartByUserId(userId);
+        ShoppingCart shoppingCart = shoppingCartService.getCartByUserId(userId);
+        return ResponseEntity.ok(shoppingCart);
     }
 
     @Operation(
@@ -66,21 +67,17 @@ public class ShoppingCartController {
             }
     )
     @PostMapping("/user/{userId}/add-product/{productId}")
-    public ResponseEntity<?> addProductToCart(
+    public ResponseEntity<ShoppingCart> addProductToCart(
             @PathVariable("userId") Long userId, @PathVariable("productId") Long productId,
             @RequestParam(
                     required = false,
                     defaultValue = "1"
             ) int quantity
     ) {
-        try {
-            ShoppingCart updatedShoppingCart =
-                    shoppingCartService.addProductToCart(userId, productId, quantity);
-            return ResponseEntity.ok(updatedShoppingCart);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                                 .body(e.getMessage());
-        }
+        ShoppingCart updatedShoppingCart =
+                shoppingCartService.addProductToCart(userId, productId, quantity);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                             .body(updatedShoppingCart);
     }
 
     @Operation(
@@ -99,11 +96,14 @@ public class ShoppingCartController {
             }
     )
     @DeleteMapping("/user/{userId}/remove-product/{productId}")
-    public ShoppingCart removeProductFromCart(
+    public ResponseEntity<ShoppingCart> removeProductFromCart(
             @PathVariable("userId") Long userId,
-            @PathVariable("productId") Long productId
+            @PathVariable("productId")
+            Long productId
     ) {
-        return shoppingCartService.removeProductFromCart(userId, productId);
+        ShoppingCart updatedShoppingCart =
+                shoppingCartService.removeProductFromCart(userId, productId);
+        return ResponseEntity.ok(updatedShoppingCart);
     }
 
     @Operation(
@@ -117,10 +117,11 @@ public class ShoppingCartController {
             }
     )
     @PutMapping("/user/{userId}/clear-cart")
-    public ShoppingCart clearCart(
+    public ResponseEntity<ShoppingCart> clearCart(
             @PathVariable("userId") Long userId
     ) {
-        return shoppingCartService.clearCart(userId);
+        ShoppingCart updatedShoppingCart = shoppingCartService.clearCart(userId);
+        return ResponseEntity.ok(updatedShoppingCart);
     }
 
     @Operation(
@@ -134,9 +135,11 @@ public class ShoppingCartController {
             }
     )
     @PostMapping("/user/{userId}/checkout")
-    public Order checkout(
+    public ResponseEntity<Order> checkout(
             @PathVariable("userId") Long userId
     ) {
-        return shoppingCartService.checkout(userId);
+        Order order = shoppingCartService.checkout(userId);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                             .body(order);
     }
 }

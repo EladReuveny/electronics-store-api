@@ -6,6 +6,7 @@
  */
 package com.reuveny.Electronics.serviceImpl;
 
+import com.reuveny.Electronics.exception.ResourceNotFoundException;
 import com.reuveny.Electronics.model.Item;
 import com.reuveny.Electronics.model.Order;
 import com.reuveny.Electronics.model.Product;
@@ -55,7 +56,7 @@ public class OrderServiceImpl implements OrderService {
                                   existingOrder.setStatus(status);
                                   return orderRepository.save(existingOrder);
                               })
-                              .orElseThrow(() -> new IllegalArgumentException(
+                              .orElseThrow(() -> new ResourceNotFoundException(
                                       "Order " + orderId + " hasn't been found."));
     }
 
@@ -63,7 +64,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public void cancelOrder(Long orderId) {
         Order order = orderRepository.findById(orderId)
-                                     .orElseThrow(() -> new IllegalArgumentException(
+                                     .orElseThrow(() -> new ResourceNotFoundException(
                                              "Order " + orderId + " hasn't been found."));
         Duration duration = Duration.between(order.getOrderDate(), LocalDateTime.now());
         if (duration.toDays() <= 14) {

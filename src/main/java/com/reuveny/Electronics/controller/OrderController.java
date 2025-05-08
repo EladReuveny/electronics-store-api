@@ -18,7 +18,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,18 +46,20 @@ public class OrderController {
             }
     )
     @GetMapping("/user/{userId}")
-    public List<Order> getOrdersByUserId(
+    public ResponseEntity<List<Order>> getOrdersByUserId(
             @PathVariable("userId") Long userId
     ) {
-        return orderService.getOrdersByUserId(userId);
+        List<Order> orders = orderService.getOrdersByUserId(userId);
+        return ResponseEntity.ok(orders);
     }
 
     @Operation(
             summary = "Get all orders"
     )
     @GetMapping("")
-    public List<Order> getAllOrders() {
-        return orderService.getAllOrders();
+    public ResponseEntity<List<Order>> getAllOrders() {
+        List<Order> orders = orderService.getAllOrders();
+        return ResponseEntity.ok(orders);
     }
 
     @Operation(
@@ -93,11 +94,12 @@ public class OrderController {
             }
     )
     @PutMapping("/{orderId}")
-    public Order updateOrderStatus(
+    public ResponseEntity<Order> updateOrderStatus(
             @PathVariable("orderId") Long orderId,
             @RequestBody Status status
     ) {
-        return orderService.updateOrderStatus(orderId, status);
+        Order updatedOrder = orderService.updateOrderStatus(orderId, status);
+        return ResponseEntity.ok(updatedOrder);
     }
 
     @Operation(
@@ -108,12 +110,7 @@ public class OrderController {
     public ResponseEntity<String> cancelOrder(
             @PathVariable("orderId") Long orderId
     ) {
-        try {
-            orderService.cancelOrder(orderId);
-            return ResponseEntity.ok("Order " + orderId + " has been canceled successfully.");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                                 .body(e.getMessage());
-        }
+        orderService.cancelOrder(orderId);
+        return ResponseEntity.ok("Order " + orderId + " has been canceled successfully.");
     }
 }
