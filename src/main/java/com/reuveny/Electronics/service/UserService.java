@@ -6,9 +6,11 @@
  */
 package com.reuveny.Electronics.service;
 
-import com.reuveny.Electronics.dto.UserForgotPasswordDTO;
-import com.reuveny.Electronics.dto.UserLoginDTO;
-import com.reuveny.Electronics.dto.UserUpdateDTO;
+import com.reuveny.Electronics.dto.UserForgotPasswordDto;
+import com.reuveny.Electronics.dto.UserLoginDto;
+import com.reuveny.Electronics.dto.UserUpdateDto;
+import com.reuveny.Electronics.exception.ResourceAlreadyExistsException;
+import com.reuveny.Electronics.exception.ResourceNotFoundException;
 import com.reuveny.Electronics.model.User;
 
 import java.util.List;
@@ -19,7 +21,7 @@ public interface UserService {
      *
      * @param userId the ID of the user to be retrieved
      * @return the user associated with the given userId
-     * @throws IllegalArgumentException if the user with the given ID does not exist
+     * @throws ResourceNotFoundException if the user with the given ID does not exist
      */
     User getUserById(Long userId);
 
@@ -38,7 +40,8 @@ public interface UserService {
      *
      * @param user the user object to be registered
      * @return the newly registered user
-     * @throws IllegalArgumentException if any required field is missing or if the email is already in use
+     * @throws IllegalArgumentException       if any required field is missing
+     * @throws ResourceAlreadyExistsException if the email is already in use
      */
     User registerUser(User user);
 
@@ -49,9 +52,11 @@ public interface UserService {
      * @param userId        the ID of the user to be updated
      * @param userUpdateDTO DTO containing the new user details
      * @return the updated user
-     * @throws IllegalArgumentException if the user does not exist or if email is already taken
+     * @throws IllegalArgumentException       if current password is incorrect or any required field is missing
+     * @throws ResourceNotFoundException      if the user with the given ID does not exist
+     * @throws ResourceAlreadyExistsException if the email is already in use
      */
-    User updateUser(Long userId, UserUpdateDTO userUpdateDTO);
+    User updateUser(Long userId, UserUpdateDto userUpdateDTO);
 
     /**
      * Deletes a user by their unique ID.
@@ -68,7 +73,7 @@ public interface UserService {
      * @return the authenticated user
      * @throws IllegalArgumentException if the email or password is incorrect
      */
-    User loginUser(UserLoginDTO userLoginDTO);
+    User loginUser(UserLoginDto userLoginDTO);
 
     /**
      * Finds and authenticates a user based on email, address, and phone number
@@ -76,8 +81,8 @@ public interface UserService {
      *
      * @param userForgotPasswordDTO The DTO containing email, address, and phone number.
      * @return The authenticated user if details match.
-     * @throws IllegalArgumentException If the email is not registered or
-     *                                  if address or phone details are incorrect.
+     * @throws IllegalArgumentException  If any required field is missing or incorrect.
+     * @throws ResourceNotFoundException If the email is not registered.
      */
-    User forgotPassword(UserForgotPasswordDTO userForgotPasswordDTO);
+    User forgotPassword(UserForgotPasswordDto userForgotPasswordDTO);
 }

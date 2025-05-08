@@ -6,6 +6,7 @@
  */
 package com.reuveny.Electronics.service;
 
+import com.reuveny.Electronics.exception.ResourceNotFoundException;
 import com.reuveny.Electronics.model.Order;
 import com.reuveny.Electronics.model.Status;
 
@@ -34,7 +35,7 @@ public interface OrderService {
      * @param orderId The ID of the order to be updated.
      * @param status  The new status to be applied to the order.
      * @return The updated order object after the status change.
-     * @throws IllegalArgumentException If the order with the specified ID is not found.
+     * @throws ResourceNotFoundException If the order with the specified ID is not found.
      */
     Order updateOrderStatus(Long orderId, Status status);
 
@@ -42,7 +43,8 @@ public interface OrderService {
      * Cancels an order if it is within 14 days of the order date.
      *
      * @param orderId The ID of the order to cancel.
-     * @throws IllegalArgumentException If the order is not found or cannot be canceled.
+     * @throws IllegalArgumentException  If the order cannot be canceled.
+     * @throws ResourceNotFoundException If the order with the specified ID is not found.
      */
     void cancelOrder(Long orderId);
 }

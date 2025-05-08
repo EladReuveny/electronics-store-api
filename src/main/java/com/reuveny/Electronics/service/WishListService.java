@@ -6,6 +6,8 @@
  */
 package com.reuveny.Electronics.service;
 
+import com.reuveny.Electronics.exception.ResourceAlreadyExistsException;
+import com.reuveny.Electronics.exception.ResourceNotFoundException;
 import com.reuveny.Electronics.model.WishList;
 
 public interface WishListService {
@@ -24,7 +26,8 @@ public interface WishListService {
      * @param userId    the ID of the user
      * @param productId the ID of the product to be added
      * @return the updated wishlist
-     * @throws IllegalArgumentException if the wishlist or product is not found or if the product already exists in the wishlist
+     * @throws ResourceNotFoundException      if the wishlist or product is not found
+     * @throws ResourceAlreadyExistsException If the product already exists in the wishlist
      */
     WishList addProductToWishList(Long userId, Long productId);
 
@@ -34,7 +37,8 @@ public interface WishListService {
      * @param userId    the ID of the user
      * @param productId the ID of the product to be removed
      * @return the updated wishlist
-     * @throws IllegalArgumentException if the wishlist is empty or the product does not exist in the wishlist
+     * @throws IllegalArgumentException  if the product does not exist in the wishlist
+     * @throws ResourceNotFoundException if the wishlist or product is not found
      */
     WishList removeProductFromWishList(Long userId, Long productId);
 
@@ -45,7 +49,8 @@ public interface WishListService {
      * @param productId the ID of the product to be moved
      * @param quantity  the quantity of the product to be moved
      * @return the updated wishlist
-     * @throws IllegalArgumentException if the wishlist, product, or shopping cart is not found, or if there is insufficient stock
+     * @throws IllegalArgumentException  If there is insufficient stock quantity
+     * @throws ResourceNotFoundException if the wishlist or product or shopping cart is not found
      */
     WishList moveToShoppingCart(Long userId, Long productId, int quantity);
 

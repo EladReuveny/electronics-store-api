@@ -52,8 +52,7 @@ The app is fully responsive and optimized for:
 - ✅ Desktops
 
 It adapts UI layouts such as navigation, product grid, and
-modals to fit smaller screen sizes using **flexbox**, **grid
-** , and conditional rendering.
+modals to fit smaller screen sizes using **flexbox**, **grid** , and conditional rendering.
 
 ---
 
