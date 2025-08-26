@@ -18,16 +18,20 @@ import com.reuveny.Electronics.model.WishList;
 import com.reuveny.Electronics.repository.UserRepository;
 import com.reuveny.Electronics.service.UserService;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    @Value("${admin.email}")
+    private String adminEmail;
 
     @Override
     public User getUserById(Long userId) {
@@ -52,7 +56,7 @@ public class UserServiceImpl implements UserService {
             throw new ResourceAlreadyExistsException("Email is already taken.");
         }
         if (user.getEmail()
-                .contains("-admin@")) {
+                .contains(adminEmail)) {
             user.setRole(Role.ADMIN);
         } else {
             user.setRole(Role.SUBSCRIBED);

@@ -17,22 +17,20 @@ import com.reuveny.Electronics.repository.ShoppingCartRepository;
 import com.reuveny.Electronics.repository.WishListRepository;
 import com.reuveny.Electronics.service.WishListService;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class WishListServiceImpl implements WishListService {
-    @Autowired
-    private WishListRepository wishListRepository;
+    private final WishListRepository wishListRepository;
 
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
-    @Autowired
-    private ShoppingCartRepository shoppingCartRepository;
+    private final ShoppingCartRepository shoppingCartRepository;
 
     @Override
     public WishList getWishListByUserId(Long userId) {
