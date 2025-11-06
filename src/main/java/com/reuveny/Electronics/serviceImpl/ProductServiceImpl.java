@@ -14,18 +14,17 @@ import com.reuveny.Electronics.repository.ProductRepository;
 import com.reuveny.Electronics.repository.WishListRepository;
 import com.reuveny.Electronics.service.ProductService;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
-    @Autowired
-    private WishListRepository wishListRepository;
+    private final WishListRepository wishListRepository;
 
     @Override
     public Product getProductById(Long productId) throws IllegalArgumentException {

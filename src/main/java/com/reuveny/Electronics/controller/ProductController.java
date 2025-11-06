@@ -13,7 +13,7 @@ import com.reuveny.Electronics.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,15 +21,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/product")
-@CrossOrigin(origins = "http://localhost:5173")
+@RequestMapping("/api/v1/products")
+@RequiredArgsConstructor
 @Tag(
         name = "Product Controller",
         description = "Handles all product-related endpoints"
 )
 public class ProductController {
-    @Autowired
-    private ProductService productService;
+    private final ProductService productService;
 
     @Operation(
             summary = "Get product by ID",

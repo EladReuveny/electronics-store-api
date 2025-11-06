@@ -14,7 +14,7 @@ import com.reuveny.Electronics.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,15 +22,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/user")
-@CrossOrigin(origins = "http://localhost:5173")
+@RequestMapping("/api/v1/users")
+@RequiredArgsConstructor
 @Tag(
         name = "User Controller",
         description = "Handles all user-related endpoints"
 )
 public class UserController {
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @Operation(
             summary = "Get user by ID",

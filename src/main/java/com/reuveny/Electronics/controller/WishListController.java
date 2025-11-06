@@ -12,21 +12,20 @@ import com.reuveny.Electronics.service.WishListService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/wish-list")
-@CrossOrigin(origins = "http://localhost:5173")
+@RequestMapping("/api/v1/wish-lists")
+@RequiredArgsConstructor
 @Tag(
         name = "Wish List Controller",
         description = "Handles all wish list-related endpoints"
 )
 public class WishListController {
-    @Autowired
-    private WishListService wishListService;
+    private final WishListService wishListService;
 
     @Operation(
             summary = "Get wish list by user ID",

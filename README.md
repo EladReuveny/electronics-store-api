@@ -245,9 +245,7 @@ at: [Electronics](https://electronics-store-app.netlify.app/).
 
    ```properties
    # PostgreSQL configuration (For Example)
-   spring.datasource.url=jdbc:postgresql://localhost:5432/your_db_name
-   spring.datasource.username=your_db_username
-   spring.datasource.password=your_db_password
+   spring.datasource.url=jdbc:postgresql://localhost:5432/your_db_name?user=your_username&password=your_password
 
    ```
 

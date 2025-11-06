@@ -17,7 +17,7 @@ import com.reuveny.Electronics.xml.OrderListWrapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,15 +25,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/order")
-@CrossOrigin(origins = "http://localhost:5173")
+@RequestMapping("/api/v1/orders")
+@RequiredArgsConstructor
 @Tag(
         name = "Order Controller",
         description = "Handles all order-related endpoints"
 )
 public class OrderController {
-    @Autowired
-    private OrderService orderService;
+    private final OrderService orderService;
 
     @Operation(
             summary = "Get orders for a specific user",

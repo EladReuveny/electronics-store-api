@@ -10,27 +10,18 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.reuveny.Electronics.model.Order;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 @JacksonXmlRootElement(localName = "orders")
 public class OrderListWrapper {
     @JacksonXmlElementWrapper(useWrapping = false)
     @JacksonXmlProperty(localName = "order")
     private List<Order> orders;
-
-    public OrderListWrapper() {
-    }
-
-    public OrderListWrapper(List<Order> orders) {
-        this.orders = orders;
-    }
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
 }
