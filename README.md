@@ -1,389 +1,227 @@
 # 🛍️ Electronics E-Commerce Application
 
-An advanced **Full-Stack E-Commerce Web Application** for
-electronics, built using:
+An advanced **Full-Stack E-Commerce Web Application** for electronics, built with a modern tech stack and a focus on performance, scalability, and user experience.
 
 - ⚙️ **Backend**: Spring Boot (Java)
-- 💻 **Frontend**: React.js
+- 💻 **Frontend**: React 19 (TypeScript)
 - 🗄️ **Database**: PostgreSQL
-- 🧰 **Tools & Libraries**: RESTful APIs, JPA, Axios, React
-  Router, Context API, Swagger API Documentation, and more
+- 🤖 **CI/CD**: GitHub Actions
 
-This responsive web application supports two roles: **User**
-and **Admin**, offering a complete and seamless shopping
-experience with the following key features:
+This responsive web application supports two roles: **User** and **Admin**, offering a complete and seamless shopping experience.
 
 ---
 
 ## ✨ Features
 
 ### 👤 User Functionality
-
-- 🔐 Authentication: Register, Login, Forgot Password
-- 🛒 Shop: Browse products and categories, view product
-  details
-- 📦 Cart: Add, update, and remove items
-- ❤️ Wishlist: Save products for later
-- 🔎 Search: Filter products by name, category, and price
-  range
-- 🧾 Orders: Place orders, view order history and order
-  details
-- ⚙️ Profile: View and edit personal details (with
-  dark/light mode support)
+- 🔐 **Authentication**: Register, Login, and Forgot Password (via email/address/phone).
+- 🛒 **Shop**: Browse products and categories, view detailed product information.
+- 📦 **Cart**: Add, update, and remove items with real-time calculations.
+- ❤️ **Wishlist**: Save favorite products for later.
+- 🔎 **Search & Filter**: Powerful search by name, category, and price range.
+- 🧾 **Orders**: Place orders, view order history, and manage order details (including cancellation within a time window).
+- ⚙️ **Profile**: Manage personal details and application preferences (Dark/Light mode support).
 
 ### 🛠️ Admin Functionality
-
-- 📦 Product Management: Add, edit, delete, and view product
-  details
-- 📃 Order Management: View all customer orders and their
-  statuses
-- 🧾 Export Orders: Download order list in XML format
-- 🌐 Responsive Admin Dashboard: Optimized for desktop and
-  tablet
+- 📦 **Product Management**: Full CRUD operations for products and categories.
+- 📃 **Order Management**: Monitor all customer orders and update statuses (Pending, Shipped, etc.).
+- 🧾 **Export**: Download order lists in XML format for external integration.
+- 🌐 **Dashboard**: A responsive admin interface optimized for all devices.
 
 ---
 
 ## 📱 Responsiveness
 
-The app is fully responsive and optimized for:
+The application is fully responsive and optimized for:
+- ✅ **Mobile** (Phones)
+- ✅ **Tablets**
+- ✅ **Desktops**
 
-- ✅ Mobile (Phones)
-- ✅ Tablets
-- ✅ Desktops
-
-It adapts UI layouts such as navigation, product grid, and
-modals to fit smaller screen sizes using **flexbox**, **grid
-** , and conditional rendering.
+It utilizes **Tailwind CSS 4** (Flexbox and Grid) along with conditional rendering to ensure a seamless experience across all screen sizes.
 
 ---
 
-## 🔗 Related Repositories
+## ⚙️ Tech Stack
 
-👉 [Frontend Repository](https://github.com/EladReuveny/electronics-store-ui)
+### 💻 Frontend (Electronics Store UI)
+- **Framework**: [React 19](https://react.dev/)
+- **Build Tool**: [Vite](https://vitejs.dev/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **State Management**: 
+  - [Zustand](https://zustand-demo.pmnd.rs/) (Client-side state: Auth, Theme)
+  - [TanStack Query v5](https://tanstack.com/query/latest) (Server-side state: Data fetching/caching)
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
+- **Routing**: [React Router 7](https://reactrouter.com/)
+- **Form Handling**: [TanStack Form](https://tanstack.com/form/latest) & [Zod](https://zod.dev/)
+- **HTTP Client**: [Axios](https://axios-http.com/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Notifications**: [React Toastify](https://fkhadra.github.io/react-toastify/)
 
-👉 [Backend Repository](https://github.com/EladReuveny/electronics-store-api)
+### ⚙️ Backend
+- **Framework**: Spring Boot (Java)
+- **Data Access**: Spring Data JPA
+- **Format Support**: Jackson (JSON & XML)
+- **API**: RESTful Web Services
+- **Build Tool**: Maven
 
----
-
-## 📚 Table of Contents
-
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Screenshots](#screenshots)
-- [Demo](#demo)
-- [Setup Instructions](#setup-instructions)
-- [User Guide](#user-guide)
-- [API Documentation](#api-documentation)
-- [Author](#author)
-
----
-
-## <a id="features">✅ Features</a>
-
-### 👤 Users
-
-- Register / Login / Forgot Password
-- Browse products and categories
-- Add to cart and wishlist
-- Place orders and view order history
-- Update profile and contact details
-
-### 🛠️ Admins
-
-- Add / update / delete products
-- View all user orders in XML
-- View product and order details
-- Manage inventory and categories
+### 🗄️ Database & Storage
+- **Database**: PostgreSQL
+- **Image Hosting**: Imgur
 
 ---
 
-## <a id="tech-stack">⚙️ Tech Stack</a>
+## 📸 Screenshots
 
-**Frontend:**
+### 🌟 New Modern UI (Current Version)
 
-- React.js (Vite)
-- Axios
-
-**Backend:**
-
-- Spring Boot
-- Spring Data JPA
-- Jackson (JSON & XML support)
-- RESTful Web Services
-
-**Database:**
-
-- PostgreSQL
-
-**Other:**
-
-- Maven
-- Lombok
-- Imgur for image hosting
-
----
-
-## <a id="screenshots">📸 Screenshots</a>
+The latest version of the application features a sleek, dark-themed modern interface with improved accessibility and performance.
 
 <details>
-   <summary>👤 <strong>User View</strong></summary>
+<summary>👤 <strong>User Experience (New UI)</strong></summary>
 
-- **Login Page**  
-  ![Login](https://imgur.com/hHHfjjU.png)
-
-- **Register Page**  
-  ![Register](https://imgur.com/KeszhHo.png)
-
-- **Forgot Password**  
-  ![Forgot Password](https://imgur.com/lX3cnZ2.png)
-
-- **Products (User View)**  
-  ![Products](https://imgur.com/yJkQK11.png)
-
-- **Categories (e.g., Laptops)**  
-  ![Categories](https://imgur.com/bOkbjIc.png)
-
-- **Product Details**  
-  ![Product Details](https://imgur.com/qqlih0U.png)
-
-- **Search with Filters**  
-  ![Search Filters](https://imgur.com/7rZb5pq.png)
-
+- **Login & Authentication**  
+  ![Login](https://imgur.com/PTR1Cgc.png)
+- **Registration**  
+  ![Register](https://imgur.com/9fztvqO.png)
+- **Password Recovery**  
+  ![Forgot Password](https://imgur.com/DmoM8Tq.png)
+- **Browse Categories**  
+  ![Categories Page](https://imgur.com/0k0wZ93.png)
+- **Product Discovery**  
+  ![Products](https://imgur.com/LZSVuSp.png)
+- **Detailed Product View**  
+  ![Product Details](https://imgur.com/TyDabSs.png)
+- **Search Experience**  
+  ![Search Modal](https://imgur.com/RWVI8rJ.png)
+- **Shopping Cart**  
+  ![Shopping Cart](https://imgur.com/8yCQgEx.png)
 - **Wishlist**  
-  ![Wishlist](https://imgur.com/0BUhCip.png)
-
-- **Cart**  
-  ![Cart](https://imgur.com/5MV1M6V.png)
-
-- **Cart (Light Mode)**  
-  ![Cart Light](https://imgur.com/LwRyNZX.png)
-
-- **Orders**  
-  ![Orders](https://imgur.com/moCuvD9.png)
-
-- **Order Details**  
-  ![Order Details](https://imgur.com/hCRtgTz.png)
-
-- **Profile Settings**  
-  ![Profile](https://imgur.com/Pw5PTqc.png)
-
-- **Profile (Light Mode)**  
-  ![Profile Light](https://imgur.com/tnrHzr3.png)
+  ![Wishlist](https://imgur.com/0Xx60UU.png)
+- **Orders Overview**  
+  ![Orders](https://imgur.com/ZaTpzGT.png)
+- **Detailed Order History**  
+  ![Order Details](https://imgur.com/wUwzRad.png)
+- **User Profile Settings**  
+  ![Profile](https://imgur.com/9fMK6vZ.png)
 
 </details>
 
----
-
 <details>
-<summary>🛠️ <strong>Admin View</strong></summary>
+<summary>🛠️ <strong>Admin Dashboard (New UI)</strong></summary>
 
-- **Products (Admin View)**  
-  ![Admin Products](https://imgur.com/gGOUsAx.png)
-
-- **Products (Light Mode)**  
-  ![Admin Products Light](https://imgur.com/MIjtDIG.png)
-
+- **Product Inventory Management**  
+  ![Admin Products](https://imgur.com/DwpC5Wh.png)
 - **Add New Product**  
-  ![Add Product](https://imgur.com/03ttngO.png)
-
-- **Product Details (Admin)**  
-  ![Admin Product Details](https://imgur.com/YpMFlEh.png)
-
-- **Edit Product**  
-  ![Edit Product](https://imgur.com/REmElXH.png)
-
-- **Orders (Admin View)**  
-  ![Admin Orders](https://imgur.com/bjmox9p.png)
-
-- **Orders (Light Mode)**  
-  ![Admin Orders Light](https://imgur.com/tnrHzr3.png)
-
-- **Order Details (Admin)**  
-  ![Order Details](https://imgur.com/3CcX3U2.png)
-
-- **All Orders (XML Format)**  
-  ![XML Orders](https://imgur.com/BGZjiW9.png)
+  ![Add Product Modal](https://imgur.com/VJIASxC.png)
+- **Edit Product Details**  
+  ![Edit Product Modal](https://imgur.com/HVdGTzC.png)
+- **Order Tracking**  
+  ![Admin Orders](https://imgur.com/n0SR4Qa.png)
+- **Order Details (Admin View)**  
+  ![Admin Product Details](https://imgur.com/yYGOvdX.png)
+- **XML Data Export**  
+  ![XML Format](https://imgur.com/N0hF8yH.png)
 
 </details>
-
----
 
 <details>
-<summary>📱 <strong>Responsive View</strong></summary>
+<summary>💡 <strong>Light Theme (New UI)</strong></summary>
 
-- **Menu Bar (Opened)**  
-  ![Menu Bar](https://imgur.com/7Wv3JGp.png)
-
-- **Products (Responsive)**  
-  ![Responsive Products](https://imgur.com/9L95xcQ.png)
+- **User Profile (Light)**  
+  ![Profile Light](https://imgur.com/MSpy3AD.png)
+- **Wishlist (Light)**  
+  ![Wishlist Light](https://imgur.com/tyrCIZo.png)
+- **Order History (Light)**  
+  ![Order Details Light](https://imgur.com/IbmEoUg.png)
+- **Admin Orders (Light)**  
+  ![Admin Orders Light](https://imgur.com/qVyRTpM.png)
+- **Admin Product Details (Light)**  
+  ![Admin Product Details Light](https://imgur.com/FKCSVe3.png)
 
 </details>
 
 ---
 
-👉 [**View All Screenshots in Gallery
-**](https://imgur.com/a/x2solXr)
+### 🏛️ Legacy UI (Reference)
+
+Previous iterations of the UI design for historical reference.
+
+<details>
+<summary>View Legacy UI Screenshots</summary>
+
+- **Legacy Login**  
+  ![Legacy Login](https://imgur.com/hHHfjjU.png)
+- **Legacy Products**  
+  ![Legacy Products](https://imgur.com/yJkQK11.png)
+- **Legacy Search Filters**  
+  ![Legacy Search](https://imgur.com/7rZb5pq.png)
+- **Legacy Cart (Light)**  
+  ![Legacy Cart Light](https://imgur.com/LwRyNZX.png)
+- **Legacy Admin Products**  
+  ![Legacy Admin Products](https://imgur.com/gGOUsAx.png)
+- **Legacy Admin Orders**  
+  ![Legacy Admin Orders](https://imgur.com/bjmox9p.png)
+
+</details>
+
+👉 [**View All Screenshots in Gallery**](https://imgur.com/a/x2solXr)
 
 ---
 
-## <a id="demo">🎥 Demo</a>
+## 🎥 Demo
 
-🚀 **Live Demo**  
-You can view the live demo of the application
-at: [Electronics](https://electronics-store-app.netlify.app/).
+🚀 **Live Demo**: [Electronics Store App](https://electronics-store-app.netlify.app/)
 
 ---
 
-## <a id="setup-instructions">🛠️ Setup Instructions</a>
+## 🛠️ Setup Instructions
 
 ### 🔧 Backend (Spring Boot)
-
-1. Clone the repository and open the backend folder in your
-   IDE.
-2. Update your PostgreSQL (Or any other database)
-   configuration in `application.properties`:
-
+1. Clone the repository and navigate to the backend folder.
+2. Update `src/main/resources/application.properties` with your PostgreSQL credentials:
    ```properties
-   # PostgreSQL configuration (For Example)
-   spring.datasource.url=jdbc:postgresql://localhost:5432/your_db_name?user=your_username&password=your_password
-
+   spring.datasource.url=jdbc:postgresql://localhost:5432/your_db_name
+   spring.datasource.username=your_db_username
+   spring.datasource.password=your_db_password
    ```
-
-3. Make sure PostgreSQL is running and the database exists.
-4. Run `ElectronicsApplication.java` to start the backend
-   server.
-
----
+3. Run the `ElectronicsApplication.java` file.
 
 ### 💻 Frontend (React + Vite)
-
 1. Navigate to the frontend directory:
-
-```bash
-cd frontend
-```
-
-2. Install dependencies:
-
-```bash
-npm install
-```
-
-3. Start the development server:
-
-```bash
-npm run dev
-```
-
-4. Open your browser at http://localhost:5173
+   ```bash
+   npm install
+   ```
+2. Start the development server:
+   ```bash
+   npm run dev
+   ```
+3. Open [http://localhost:5173](http://localhost:5173).
 
 ---
 
-## <a id="user-guide">📘 User Guide</a>
+## 📜 Available Scripts
+
+- `npm run dev`: Start development server with HMR.
+- `npm run build`: Build the project for production (includes type-checking).
+- `npm run lint`: Run ESLint to check for code quality.
+- `npm run format:check`: Check code formatting with Prettier.
+- `npm run format:fix`: Automatically fix code formatting with Prettier.
+- `npm run preview`: Preview the production build locally.
 
 ---
 
-**📘 User Guide (Functional Description)**
+## 🤖 CI/CD
 
-**👤 User Flow**
+This project uses **GitHub Actions** for continuous integration. On every push and pull request, the following checks are performed:
 
-1. **Register / Login**
-
-    - Navigate to the home page.
-    - Click Register to create a new account or Login if you
-      already have one.
-    - You can use Forgot Password to retrieve your password
-      via email, address and phone number.
-
-2. **Browsing Products**
-
-    - Users are allowed to view products without having an
-      account.
-    - View all available products categorized by type (e.g.,
-      Smart Phones, Laptops, Tablets, Tv's).
-    - Use the Search Bar to find specific items.
-    - Apply Filters to narrow down products by price or hide
-      out-of-stock items.
-
-3. **Product Details**
-
-    - Click on any product to view detailed information,
-      such as:
-        - Price
-        - Description
-        - Stock availability
-        - Category
-        - Images.
-    - You can Add to Cart or Wishlist from this page.
-
-4. **Wishlist**
-
-    - Accessible via the top navigation bar.
-    - Add and remove items for future purchases.
-
-5. **Shopping Cart**
-
-    - Accessible via the top navigation bar.
-    - View all selected items for purchase.
-    - Update quantities or remove items.
-    - View product details if necessary.
-    - Proceed to Checkout to place an order.
-
-6. **Orders**
-
-    - View past orders and their details.
-    - Click any order to see more detailed information.
-    - Cancel an Order: If the order was placed within a
-      specified time after checkout, you can choose to
-      cancel the order directly from the order details page.
-
-7. **Profile Settings**
-    - Accessible via the top navigation bar.
-    - Update your email, password, address and phone number.
-    - Modifying application's appearance settings, such as
-      display preferences.
-
-🛠️ **Admin Flow**
-
-1. **Login**
-
-    - Admins must log in with admin credentials.
-
-2. **Manage Products**
-
-    - View all products.
-    - Add new products and edit/delete existing ones.
-
-3. **Managing and Tracking Orders**
-
-    - Access the Orders page to view all the orders.
-    - Option to view orders in XML format for export or
-      integration.
-    - Option to modify order's status as needed (e.g., "
-      Pending", "Packaging", "Shipped", "Delivered", "
-      Canceled").
-
-🖼️ **Screenshots Reference**
-
-- To view real screenshots of the application, visit
-  the <a href="#screenshots">📸 Screenshots</a> section.
+1. **Clean Install**: Uses `npm ci` for reliable dependency management.
+2. **Linting**: Ensures code adheres to ESLint rules.
+3. **Formatting**: Validates code style using Prettier.
+4. **Build & Type-Check**: Runs `tsc` and ensures the project builds successfully.
 
 ---
 
-## <a id="api-documentation">📄 API Documentation</a>
-
-The backend is documented using **Swagger UI**, which
-provides an interactive interface to explore and test API
-endpoints.
-
-Once the Spring Boot application is running, you can access
-the documentation at:
-
-🔗 [Swagger UI](http://localhost:8080/swagger-ui/index.html)
-
----
-
-## <a id="author">👨‍💻 Author</a>
+## 👨‍💻 Author
 
 **Elad Reuveny**  
 📧 [eladre123@gmail.com](mailto:eladre123@gmail.com)  
